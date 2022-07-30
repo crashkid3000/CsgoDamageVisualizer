@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CsgoDamageVisualizerTests.core.loader.model
 {
     [TestClass]
-    internal class CfgWeaponTest
+    public class CfgWeaponTest
     {
 
         [TestMethod]

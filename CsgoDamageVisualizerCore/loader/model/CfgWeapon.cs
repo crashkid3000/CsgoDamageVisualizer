@@ -152,7 +152,7 @@ namespace CsgoDamageVisualizerCore.loader.model
         /// <returns>The attribute name map</returns>
         public static IReadOnlyDictionary<string, string> GetAttributeNameMap()
         {
-            if(attributeMap.Count == 0)
+            if(attributeMap.Count > 0)
             {
                 return attributeMap;
             }
@@ -160,8 +160,8 @@ namespace CsgoDamageVisualizerCore.loader.model
             attributeMap = new Dictionary<string, string>();
 
             Type cfgWeapon = typeof(CfgWeapon);
-           
-            foreach(FieldInfo field in cfgWeapon.GetFields())
+
+            foreach (FieldInfo field in cfgWeapon.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
             {
                 CfgAttributeName? cfgAttributeName = (CfgAttributeName?) (field.GetCustomAttribute(typeof(CfgAttributeName)));
                 string cfgName = cfgAttributeName?.Name ?? field.Name;
