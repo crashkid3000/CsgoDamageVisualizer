@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CsgoDamageVisualizer.loader
+namespace CsgoDamageVisualizerCore.loader.model
 {
-    internal class CfgAttributeName: Attribute
+    internal class CfgAttributeName : Attribute
     {
         public CfgAttributeName(string name)
         {
