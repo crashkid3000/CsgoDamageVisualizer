@@ -10,7 +10,7 @@ namespace CsgoDamageVisualizerCore.loader.model
     /// <summary>
     /// The raw stats gathered from the items_game.txt file
     /// </summary>
-    internal class CfgWeapon
+    public class CfgWeapon
     {
         internal string? __name;
         [CfgAttributeType(typeof(string))]
@@ -142,15 +142,17 @@ namespace CsgoDamageVisualizerCore.loader.model
         [CfgAttributeName("recoil seed alt")]
         internal string? recoilSeedAlt;
 
-        static private Dictionary<string, string> attributeMap;
+        static private Dictionary<string, string> attributeMap = new Dictionary<string, string>();
 
         /// <summary>
-        /// Creates the map of attribute names to field names. However, if one already exists, it reutrns that one.
+        /// Creates the map of attribute names to field names. However, if one already exists, it returns that one.
+        /// 
+        /// The attribute names list maps the "keys" of the CFG file to the fields within this code. Type conversion and such happens at a later point.
         /// </summary>
         /// <returns>The attribute name map</returns>
-        internal static IReadOnlyDictionary<string, string> GetAttributeNameMap()
+        public static IReadOnlyDictionary<string, string> GetAttributeNameMap()
         {
-            if(attributeMap != null)
+            if(attributeMap.Count == 0)
             {
                 return attributeMap;
             }
@@ -158,7 +160,7 @@ namespace CsgoDamageVisualizerCore.loader.model
             attributeMap = new Dictionary<string, string>();
 
             Type cfgWeapon = typeof(CfgWeapon);
-            Attribute cfgAttribute
+           
             foreach(FieldInfo field in cfgWeapon.GetFields())
             {
                 CfgAttributeName? cfgAttributeName = (CfgAttributeName?) (field.GetCustomAttribute(typeof(CfgAttributeName)));
