@@ -3,144 +3,172 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace CsgoDamageVisualizerCore.loader.model
 {
     /// <summary>
     /// The raw stats gathered from the items_game.txt file
     /// </summary>
-    public class CfgWeapon
+    internal class CfgWeapon
     {
-        private string? __name;
+        internal string? __name;
         [CfgAttributeType(typeof(string))]
-        private string? prefab;
+        internal string? prefab;
         [CfgAttributeType(typeof(string))]
-        private string? item_class;
+        internal string? item_class;
         [CfgAttributeType(typeof(bool))]
-        private string? terrorists;
+        internal string? terrorists;
         [CfgAttributeType(typeof(bool))]
         [CfgAttributeName("counter-terrorists")]
-        private string? counterTerrorists;
+        internal string? counterTerrorists;
         [CfgAttributeName("heat per shot")]
-        private string? heatPerShot;
+        internal string? heatPerShot;
         [CfgAttributeName("addon scale")]
-        private string? addonScale;
+        internal string? addonScale;
         [CfgAttributeType(typeof(int))]
         [CfgAttributeName("tracer frequency")]
-        private string? tracerFrequency;
+        internal string? tracerFrequency;
         [CfgAttributeType(typeof(int))]
         [CfgAttributeName("primary clip size")]
-        private string? primaryClipSize;
+        internal string? primaryClipSize;
         [CfgAttributeType(typeof(int))]
         [CfgAttributeName("primary default clip size")]
-        private string? primaryDefaultClipSize;
+        internal string? primaryDefaultClipSize;
         [CfgAttributeType(typeof(int))]
         [CfgAttributeName("secondary clip default size")]
-        private string? secondaryDefaultClipSize;
+        internal string? secondaryDefaultClipSize;
         [CfgAttributeType(typeof(bool))]
         [CfgAttributeName("is full auto")]
-        private string? isFullAuto;
+        internal string? isFullAuto;
         [CfgAttributeName("max player speed")]
         [CfgAttributeType(typeof(int))]
-        private string? maxPlayerSpeed;
+        internal string? maxPlayerSpeed;
         [CfgAttributeType(typeof(int))]
         [CfgAttributeName("in game price")]
-        private string? inGamePrice;
+        internal string? inGamePrice;
         [CfgAttributeName("armor ratio")]
-        private string? armorRatio;
+        internal string? armorRatio;
         [CfgAttributeType(typeof(int))]
         [CfgAttributeName("crosshair min distance")]
-        private string? crosshairMinDistance;
+        internal string? crosshairMinDistance;
         [CfgAttributeType(typeof(int))]
         [CfgAttributeName("crosshairDeltaDistance")]
-        private string? crosshairDeltaDistance;
-        private string? cycletime;
-        private string? penetration;
+        internal string? crosshairDeltaDistance;
+        internal string? cycletime;
+        internal string? penetration;
         [CfgAttributeType(typeof(int))]
-        private string? damage;
+        internal string? damage;
         [CfgAttributeName("headshot multiplier")]
-        private string? headshotMultiplier;
+        internal string? headshotMultiplier;
         [CfgAttributeType(typeof(int))]
-        private string? range;
+        internal string? range;
         [CfgAttributeName("range modifier")]
-        private string? rangeModifier;
+        internal string? rangeModifier;
         [CfgAttributeType(typeof(int))]
-        private string? bullets;
+        internal string? bullets;
         [CfgAttributeName("flinch velocity modifier large")]
-        private string? flinchVelocityModifierLarge;
+        internal string? flinchVelocityModifierLarge;
         [CfgAttributeName("flinch velocity modifier small")]
-        private string? flinchVelocityModifierSmall;
-        private string? spread;
+        internal string? flinchVelocityModifierSmall;
+        internal string? spread;
         [CfgAttributeName("inaccuracy crouch")]
-        private string? inaccuracyCrouch;
+        internal string? inaccuracyCrouch;
         [CfgAttributeName("inaccuracy stand")]
-        private string? inaccuracyStand;
+        internal string? inaccuracyStand;
         [CfgAttributeName("inaccuracy jump initial")]
-        private string? inaccuracyJumpInitial;
+        internal string? inaccuracyJumpInitial;
         [CfgAttributeName("inaccuracy jump apex")]
-        private string? inaccuracyJumpApex;
+        internal string? inaccuracyJumpApex;
         [CfgAttributeName("inaccuracy jump")]
-        private string? inaccuracyJump;
+        internal string? inaccuracyJump;
         [CfgAttributeName("inaccuracy land")]
-        private string? inaccuracyLand;
+        internal string? inaccuracyLand;
         [CfgAttributeName("inaccuracy ladder")]
-        private string? inaccuracyLadder;
+        internal string? inaccuracyLadder;
         [CfgAttributeName("inaccuracy fire")]
-        private string? inaccuracyFire;
+        internal string? inaccuracyFire;
         [CfgAttributeName("inaccuracy move")]
-        private string? inaccuracyMove;
+        internal string? inaccuracyMove;
         [CfgAttributeName("recovery time crouch")]
-        private string? recoveryTimeCrouch;
+        internal string? recoveryTimeCrouch;
         [CfgAttributeName("recovery time stand")]
-        private string? recoveryTimeStand;
+        internal string? recoveryTimeStand;
         [CfgAttributeName("recoil angle")]
-        private string? recoilAngle;
+        internal string? recoilAngle;
         [CfgAttributeName("recoil angle variance")]
-        private string? recoilAngleVariance;
+        internal string? recoilAngleVariance;
         [CfgAttributeName("recoil magnitude")]
-        private string? recoilMagnitude;
+        internal string? recoilMagnitude;
         [CfgAttributeName("recoil magnitude variance")]
-        private string? recoilMagnitudeVariance;
+        internal string? recoilMagnitudeVariance;
         [CfgAttributeType(typeof(int))]
         [CfgAttributeName("recoil seed")]
-        private string? recoilSeed;
+        internal string? recoilSeed;
         [CfgAttributeType(typeof(int))]
         [CfgAttributeName("primary reserve ammo max")]
-        private string? primaryReserveAmmoMax;
+        internal string? primaryReserveAmmoMax;
         [CfgAttributeName("spread alt")]
-        private string? spreadAlt;
+        internal string? spreadAlt;
         [CfgAttributeName("inaccuracy crouch alt")]
-        private string? inaccuracyCrouchAlt;
+        internal string? inaccuracyCrouchAlt;
         [CfgAttributeName("inaccuracy stand alt")]
-        private string? inaccuracyStandAlt;
+        internal string? inaccuracyStandAlt;
         [CfgAttributeName("inaccuracy jump alt")]
-        private string? inaccuracyJumpAlt;
+        internal string? inaccuracyJumpAlt;
         [CfgAttributeName("inaccuracy land alt")]
-        private string? inaccuracyLandAlt;
+        internal string? inaccuracyLandAlt;
         [CfgAttributeName("inaccuracy ladder alt")]
-        private string? inaccuracyLadderAlt;
+        internal string? inaccuracyLadderAlt;
         [CfgAttributeName("inaccuracy fire alt")]
-        private string? inaccuracyFireAlt;
+        internal string? inaccuracyFireAlt;
         [CfgAttributeName("inaccuracy move alt")]
-        private string? inaccuracyMoveAlt;
+        internal string? inaccuracyMoveAlt;
         [CfgAttributeName("recovery time crouch alt")]
-        private string? recoveryTimeCrouchAlt;
+        internal string? recoveryTimeCrouchAlt;
         [CfgAttributeName("recovery time stand alt")]
-        private string? recoveryTimeStandAlt;
+        internal string? recoveryTimeStandAlt;
         [Obsolete("Not used by CSGO game")]
         [CfgAttributeName("recoil angle alt")]
-        private string? recoilAngleAlt;
+        internal string? recoilAngleAlt;
         [CfgAttributeName("recoil angle variance alt")]
-        private string? recoilAngleVarianceAlt;
+        internal string? recoilAngleVarianceAlt;
         [CfgAttributeName("recoil magnitude alt")]
-        private string? recoilMagnitudeAlt;
+        internal string? recoilMagnitudeAlt;
         [CfgAttributeName("recoil magnitude variance alt")]
-        private string? recoilMagnitudeVarianceAlt;
+        internal string? recoilMagnitudeVarianceAlt;
         [Obsolete("Not used by CSGO game")]
         [CfgAttributeType(typeof(int))]
         [CfgAttributeName("recoil seed alt")]
-        private string? recoilSeedAlt;
+        internal string? recoilSeedAlt;
 
+        static private Dictionary<string, string> attributeMap;
 
+        /// <summary>
+        /// Creates the map of attribute names to field names. However, if one already exists, it reutrns that one.
+        /// </summary>
+        /// <returns>The attribute name map</returns>
+        internal static IReadOnlyDictionary<string, string> GetAttributeNameMap()
+        {
+            if(attributeMap != null)
+            {
+                return attributeMap;
+            }
+
+            attributeMap = new Dictionary<string, string>();
+
+            Type cfgWeapon = typeof(CfgWeapon);
+            Attribute cfgAttribute
+            foreach(FieldInfo field in cfgWeapon.GetFields())
+            {
+                CfgAttributeName? cfgAttributeName = (CfgAttributeName?) (field.GetCustomAttribute(typeof(CfgAttributeName)));
+                string cfgName = cfgAttributeName?.Name ?? field.Name;
+                attributeMap.Add(cfgName, field.Name);
+
+            }
+
+            return attributeMap;
+
+        }
     }
 }
