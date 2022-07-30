@@ -19,6 +19,15 @@ namespace CsgoDamageVisualizerTests.core.loader.model
             Assert.IsTrue(attributeMap.Count > 0);
         }
 
+        [TestMethod]
+        public void GetCastTypeMap_createsCastTypeMap()
+        {
+            IReadOnlyDictionary<string, Type> castTypeMap = CfgWeapon.GetCastTypeMap();
+
+            Assert.IsNotNull(castTypeMap);
+            Assert.IsTrue(castTypeMap.Count > 0);
+        }
+
 
     }
 }

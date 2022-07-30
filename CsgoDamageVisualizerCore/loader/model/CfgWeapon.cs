@@ -143,6 +143,7 @@ namespace CsgoDamageVisualizerCore.loader.model
         internal string? recoilSeedAlt;
 
         static private Dictionary<string, string> attributeMap = new Dictionary<string, string>();
+        static private Dictionary<string, Type> castTypeMap = new Dictionary<string, Type>();
 
         /// <summary>
         /// Creates the map of attribute names to field names. However, if one already exists, it returns that one.
@@ -157,8 +158,6 @@ namespace CsgoDamageVisualizerCore.loader.model
                 return attributeMap;
             }
 
-            attributeMap = new Dictionary<string, string>();
-
             Type cfgWeapon = typeof(CfgWeapon);
 
             foreach (FieldInfo field in cfgWeapon.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
@@ -170,6 +169,25 @@ namespace CsgoDamageVisualizerCore.loader.model
             }
 
             return attributeMap;
+
+        }
+
+        public static IReadOnlyDictionary<string, Type> GetCastTypeMap()
+        {
+            if(castTypeMap.Count > 0)
+            {
+                return castTypeMap;
+            }
+
+            Type cfgWeapon = typeof(CfgWeapon);
+            foreach(FieldInfo field in cfgWeapon.GetFields(BindingFlags.Instance | BindingFlags.NonPublic))
+            {
+                CfgAttributeType? cfgAttributeType = (CfgAttributeType?) (field.GetCustomAttribute(typeof(CfgAttributeType)));
+                Type castType = cfgAttributeType?.GetType() ?? typeof(float);
+                castTypeMap.Add(field.Name, castType);
+            }
+
+            return castTypeMap;
 
         }
     }
