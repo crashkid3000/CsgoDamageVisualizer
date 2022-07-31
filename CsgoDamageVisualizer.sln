@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsgoDamageVisualizer", "CSgtoDamageVisualizer\CsgoDamageVisualizer.csproj", "{0C399251-D5F5-4283-A676-47BD71437250}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsgoDamageVisualizer", "CSgtoDamageVisualizer\CsgoDamageVisualizer.csproj", "{0C399251-D5F5-4283-A676-47BD71437250}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsgoDamageVisualizerTests", "CsgoDamageVisualizerTests\CsgoDamageVisualizerTests.csproj", "{312D19A0-EACA-45DB-BF43-B2850E31C0FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsgoDamageVisualizerTests", "CsgoDamageVisualizerTests\CsgoDamageVisualizerTests.csproj", "{312D19A0-EACA-45DB-BF43-B2850E31C0FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsgoDamageVisualizerWeb", "CsgoDamageVisualizerWeb\CsgoDamageVisualizerWeb.csproj", "{B6D3520F-9955-485C-A3AD-10940528629C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsgoDamageVisualizerWeb", "CsgoDamageVisualizerWeb\CsgoDamageVisualizerWeb.csproj", "{B6D3520F-9955-485C-A3AD-10940528629C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsgoDamageVisualizerCore", "CsgoDamageVisualizerCore\CsgoDamageVisualizerCore.csproj", "{D1544F3A-BC98-487B-AF77-282637D31105}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsgoDamageVisualizerCore", "CsgoDamageVisualizerCore\CsgoDamageVisualizerCore.csproj", "{D1544F3A-BC98-487B-AF77-282637D31105}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace CsgoDamageVisualizerCore.loader
 {
-    internal class CfgLoader
+    public class CfgLoader
     {
+
+        public CfgLoader()
+        {
+            iCsgoDamageVisualizerConfig = ICsgoDamageVisualizerConfig.GetInstance();
+        }
+
+        private ICsgoDamageVisualizerConfig iCsgoDamageVisualizerConfig;
+
         //Find CFG file
 
         //Load lines of CFG file
@@ -23,5 +31,13 @@ namespace CsgoDamageVisualizerCore.loader
         //if current indentation level == that of the opening "weapon_\s*_prefab": save current CfgWeapon to list
 
         //next line...
+
+
+        private Uri? getConfigFileLocation()
+        {
+            Uri installDir = iCsgoDamageVisualizerConfig.GetCsgoInstallDir();
+            Uri retVal = new Uri(installDir, @"csgo\scripts\items\items_game.txt");
+            return retVal;
+        }
     }
 }
