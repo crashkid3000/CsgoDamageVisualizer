@@ -11,19 +11,15 @@ namespace CsgoDamageVisualizer.config
 {
     internal class CsgoDamageVisualizerDektopConfig : ICsgoDamageVisualizerConfig
     {
-
-        private static CsgoDamageVisualizerDektopConfig? instance;
-
-
         
         public static ICsgoDamageVisualizerConfig GetInstance()
         {
-            ICsgoDamageVisualizerConfig.SetInstanceType(typeof(CsgoDamageVisualizerDektopConfig));
-            if(instance == null)
+            if(ICsgoDamageVisualizerConfig.ConfigInstanceType == null)
             {
-                instance = new CsgoDamageVisualizerDektopConfig();
+                ICsgoDamageVisualizerConfig.ConfigInstanceType = typeof(CsgoDamageVisualizerDektopConfig);
             }
-            return instance;
+
+            return ICsgoDamageVisualizerConfig.Instance;
         }
 
         public Uri GetCsgoInstallDir()

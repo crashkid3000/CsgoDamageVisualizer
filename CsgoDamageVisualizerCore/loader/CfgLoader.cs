@@ -11,7 +11,7 @@ namespace CsgoDamageVisualizerCore.loader
 
         public CfgLoader()
         {
-            iCsgoDamageVisualizerConfig = ICsgoDamageVisualizerConfig.GetInstance();
+            iCsgoDamageVisualizerConfig = ICsgoDamageVisualizerConfig.Instance;
         }
 
         private ICsgoDamageVisualizerConfig iCsgoDamageVisualizerConfig;
@@ -33,7 +33,15 @@ namespace CsgoDamageVisualizerCore.loader
         //next line...
 
 
-        private Uri? getConfigFileLocation()
+        private string[] LoadCfgFile()
+        {
+            Uri cfgLocation = GetConfigFileLocation();
+            Task<string[]> readLines = File.ReadAllLinesAsync(cfgLocation.AbsoluteUri);
+            readLines.Wait();
+            return readLines.Result;
+        }
+
+        private Uri? GetConfigFileLocation()
         {
             Uri installDir = iCsgoDamageVisualizerConfig.GetCsgoInstallDir();
             Uri retVal = new Uri(installDir, @"csgo\scripts\items\items_game.txt");

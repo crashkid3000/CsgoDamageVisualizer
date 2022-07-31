@@ -14,42 +14,47 @@ namespace CsgoDamageVisualizerCore.loader
     {
 
         private static ICsgoDamageVisualizerConfig? instance;
-        private static Type? configInstanceType;
-
         /// <summary>
         /// Gets the singleton instance, if one exists. Otherwise attempts to create one. <b>Note:</b> SetInstanceType(Type) needs to be called beforehand!
         /// </summary>
         /// <returns>The singleton instance</returns>
         /// <exception cref="NullReferenceException">If no instance type has been set.</exception>
-        public static ICsgoDamageVisualizerConfig GetInstance() {
+        public static ICsgoDamageVisualizerConfig Instance
+        {
+            get {
+                if (instance != null)
+                {
+                    return instance;
+                }
 
-            if (instance != null)
-            {
+                if (configInstanceType == null)
+                {
+                    throw new NullReferenceException($"The config instance type has not been set yet. Set it using {nameof(ConfigInstanceType)}(Type value), where value is a subclass of {nameof(ICsgoDamageVisualizerConfig)}");
+                }
+
+                ConstructorInfo? ctor = configInstanceType.GetConstructor(new Type[0]);
+                instance = (ICsgoDamageVisualizerConfig)(ctor?.Invoke(new object[0]) ?? throw new NullReferenceException($"No default constructor exists for type {configInstanceType.Name}"));
                 return instance;
             }
-
-            if (configInstanceType == null)
-            {
-                throw new NullReferenceException($"The config instance type has not been set yet. Set it using {nameof(SetInstanceType)}(Type T), where T is a subclass of {nameof(ICsgoDamageVisualizerConfig)}");
-            }
-
-            ConstructorInfo? ctor = configInstanceType.GetConstructor(new Type[0]);
-            instance = (ICsgoDamageVisualizerConfig) (ctor?.Invoke(new object[0]) ?? throw new NullReferenceException($"No default constructor exists for type {configInstanceType.Name}"));
-            return instance;
         }
-
-        /// <summary>
-        /// Sets the type of the config class that needs to be instantiated. Must be set before the first "GetInstance" call.
-        /// </summary>
-        /// <param name="t">The implemented config class. Must be a sublcass of IcsgoDamageVisualizerConfig.</param>
-        /// <exception cref="ArgumentException">IF the given type is not a class implementing ICsgoDamageVisualizerConfig</exception>
-        public static void SetInstanceType(Type t)
+        private static Type? configInstanceType;
+        public static Type? ConfigInstanceType
         {
-            if (!t.IsSubclassOf(typeof(ICsgoDamageVisualizerConfig)))
+            get { return configInstanceType; }
+            
+            /// <summary>
+            /// Sets the type of the config class that needs to be instantiated. Must be set before the first "GetInstance" call.
+            /// </summary>
+            /// <param name="t">The implemented config class. Must be a sublcass of IcsgoDamageVisualizerConfig.</param>
+            /// <exception cref="ArgumentException">IF the given type is not a class implementing ICsgoDamageVisualizerConfig</exception>
+            set
             {
-                throw new ArgumentException($"The given type {t.Name} is not a {nameof(ICsgoDamageVisualizerConfig)}");
+                if (!value.IsSubclassOf(typeof(ICsgoDamageVisualizerConfig)))
+                {
+                    throw new ArgumentException($"The given type {value.Name} is not a {nameof(ICsgoDamageVisualizerConfig)}");
+                }
+                configInstanceType = value;
             }
-            configInstanceType = t;
         }
 
 
