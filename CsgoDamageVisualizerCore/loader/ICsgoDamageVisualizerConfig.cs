@@ -54,6 +54,7 @@ namespace CsgoDamageVisualizerCore.loader
                     throw new ArgumentException($"The given type {value.Name} is not a {nameof(ICsgoDamageVisualizerConfig)}");
                 }
                 configInstanceType = value;
+                Console.WriteLine($"The config instance type has been updated to {value.Name}");
             }
         }
 
