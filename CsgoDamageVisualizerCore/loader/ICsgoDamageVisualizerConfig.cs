@@ -49,7 +49,7 @@ namespace CsgoDamageVisualizerCore.loader
             /// <exception cref="ArgumentException">IF the given type is not a class implementing ICsgoDamageVisualizerConfig</exception>
             set
             {
-                if (!value.IsSubclassOf(typeof(ICsgoDamageVisualizerConfig)))
+                if (!value.IsAssignableTo(typeof(ICsgoDamageVisualizerConfig)))
                 {
                     throw new ArgumentException($"The given type {value.Name} is not a {nameof(ICsgoDamageVisualizerConfig)}");
                 }
