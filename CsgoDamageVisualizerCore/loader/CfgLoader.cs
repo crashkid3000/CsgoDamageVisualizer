@@ -45,6 +45,8 @@ namespace CsgoDamageVisualizerCore.loader
 
                 }
             }
+
+            return weapons;
         }
 
         //Find CFG file
@@ -85,7 +87,7 @@ namespace CsgoDamageVisualizerCore.loader
 
         private void findNewState(string line)
         {
-            if (Regex.IsMatch(line, OPENING_BRACES_PATTERN) {
+            if (Regex.IsMatch(line, OPENING_BRACES_PATTERN)) {
                 currentIndentationLevel++;
             }
             
@@ -132,7 +134,7 @@ namespace CsgoDamageVisualizerCore.loader
         {
             BEFORE_FIRST,
             IN_WEAPON_DEFINITION,
-            BETWEEN_WEAPON_DEFINITION;
+            BETWEEN_WEAPON_DEFINITION
         }
 
 
