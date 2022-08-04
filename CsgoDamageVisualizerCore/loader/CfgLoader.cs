@@ -34,7 +34,7 @@ namespace CsgoDamageVisualizerCore.loader
         {
             Dictionary<string, CfgWeapon> weapons = new Dictionary<string, CfgWeapon>();
 
-            string[] lines = LoadCfgFile();
+            string[] lines = Task.Run(async() => await LoadCfgFileAsync()).Result;
 
             foreach(string line in lines)
             {
@@ -65,12 +65,16 @@ namespace CsgoDamageVisualizerCore.loader
 
         //next line...
 
-
-        private string[] LoadCfgFile()
+        /// <summary>
+        /// Loads the config file from the disk in an async manner. 
+        /// </summary>
+        /// <returns>Each line of the config file.</returns>
+        private async Task<string[]> LoadCfgFileAsync()
         {
             Uri cfgLocation = GetConfigFileLocation();
+#pragma warning disable CS8602 // Dereferenzierung eines möglichen Nullverweises.
             Task<string[]> readLines = File.ReadAllLinesAsync(cfgLocation.AbsoluteUri);
-            readLines.Wait();
+#pragma warning restore CS8602 // Dereferenzierung eines möglichen Nullverweises.
             return readLines.Result;
         }
 
