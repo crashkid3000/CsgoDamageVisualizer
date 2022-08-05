@@ -12,7 +12,7 @@ using CsgoDamageVisualizerCore.extensions;
 
 namespace CsgoDamageVisualizerCore.loader
 {
-    public class CfgLoader
+    public class CfgParser
     {
 
         private const string WEAPON_PREFAB_START_PATTERN = @"\s+weapon_\w+_prefab\s*";
@@ -23,7 +23,7 @@ namespace CsgoDamageVisualizerCore.loader
         private int currentIndentationLevel = 0;
         private int weaponDefintitionIdentationLevel = 0;
 
-        public CfgLoader()
+        public CfgParser()
         {
             iCsgoDamageVisualizerConfig = ICsgoDamageVisualizerConfig.Instance;
         }
