@@ -15,9 +15,8 @@ namespace CsgoDamageVisualizerCore.loader
 
         private static ICsgoDamageVisualizerConfig? instance;
         /// <summary>
-        /// Gets the singleton instance, if one exists. Otherwise attempts to create one. <b>Note:</b> SetInstanceType(Type) needs to be called beforehand!
+        /// The <i>singleton</i> instance. Returns the identical instance if one exists already. Otherwise attempts to create one. <b>Note:</b> SetInstanceType(Type) needs to be called beforehand!
         /// </summary>
-        /// <returns>The singleton instance</returns>
         /// <exception cref="NullReferenceException">If no instance type has been set.</exception>
         public static ICsgoDamageVisualizerConfig Instance
         {
@@ -38,6 +37,12 @@ namespace CsgoDamageVisualizerCore.loader
             }
         }
         private static Type? configInstanceType;
+        
+        /// <summary>
+        /// The type of the config class that needs to be instantiated. Must be set at least once before the first "GetInstance" call.
+        /// For example, implementing classes may set ConfigIntanceType to the type of the implementing class before clalling Instance. This way, users of the implementing class
+        /// don't need to worry about this constraint.
+        /// </summary>
         public static Type? ConfigInstanceType
         {
             get { return configInstanceType; }
