@@ -58,7 +58,7 @@ namespace CsgoDamageVisualizerTests.core.loader
         public void GetCsgoInstallDir_ReturnsDefinedValueOfImpl()
         {
             Uri baseDir = new HelperMethods().GetProjectBaseDir(HelperMethods.Project.TEST);
-            Uri definedUri = new Uri(baseDir, @"resources/core");
+            Uri definedUri = new Uri(Path.Combine(baseDir.AbsolutePath, @"resources/core"));
             Uri installDir = ICsgoDamageVisualizerConfig.Instance.GetCsgoInstallDir();
             Assert.AreEqual(definedUri, installDir);
         }
