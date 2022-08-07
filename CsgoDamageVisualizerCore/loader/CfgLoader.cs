@@ -27,7 +27,7 @@ namespace CsgoDamageVisualizerCore.loader
         {
             Uri cfgLocation = GetConfigFileLocation();
 #pragma warning disable CS8602 // Dereferenzierung eines möglichen Nullverweises.
-            Task<string[]> readLines = File.ReadAllLinesAsync(cfgLocation.AbsoluteUri);
+            Task<string[]> readLines = File.ReadAllLinesAsync(cfgLocation.AbsolutePath);
 #pragma warning restore CS8602 // Dereferenzierung eines möglichen Nullverweises.
             return await readLines;
         }
