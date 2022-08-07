@@ -13,35 +13,33 @@ namespace CsgoDamageVisualizerTests.core.utils
     [TestClass]
     public class HelperMethodsTest
     {
-        internal static bool? isLocalMachine;
+        private bool? isLocalMachine;
 
         [TestInitialize]
         public void setup()
         {
-            Uri projectBaseDir = new HelperMethods().GetProjectBaseDir(HelperMethods.Project.TEST);
-            string csgoDamageVisualizerDir = Directory.GetParent(projectBaseDir.AbsolutePath).FullName;
-            string testFilePath = Path.Combine(csgoDamageVisualizerDir, "dontDelete.txt");
+            Uri projectBaseDir = new HelperMethods().GetProjectBaseDir(HelperMethods.Project.SUPER);
+            string testFilePath = projectBaseDir.AbsolutePath + "/dontDelete.txt";
             isLocalMachine = File.Exists(testFilePath);
+            Console.WriteLine("Running tests " + (isLocalMachine ?? false ? "" : "NOT ") + "on the local machine");
         }
 
 
-        [TestClass]
-        public class GetProjectBaseDir
-        {
-            private const string baseDir = @"C:\\Users\\\s+\\source\\repos\\CsgoDamageVisualizer\";
+        
+            private const string baseDir = @"C:\/Users\/\w+\/source\/repos\/CsgoDamageVisualizer\/";
 
             [TestMethod]
             public void GetProjectBaseDir_WithCore_RetunsCorrectDirectory()
             {
                 string expectedPath = baseDir + "CsgoDamageVisualizerCore";
                 string actualPath = new HelperMethods().GetProjectBaseDir(HelperMethods.Project.CORE).AbsolutePath;
-                if(HelperMethodsTest.isLocalMachine ?? false)
+                if(isLocalMachine ?? false)
                 {
-                    Assert.IsTrue(Regex.IsMatch(actualPath, expectedPath));
+                    Assert.IsTrue(Regex.IsMatch(actualPath, expectedPath), $"{actualPath} doesnt match to {expectedPath}");
                 }
                 else
                 {
-                    if (!expectedPath.Equals(actualPath))
+                    if (!Regex.IsMatch(actualPath, expectedPath))
                     {
                         Console.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.CORE)}");
                     }
@@ -53,13 +51,13 @@ namespace CsgoDamageVisualizerTests.core.utils
             {
                 string expectedPath = baseDir + "CSgtoDamageVisualizer";
                 string actualPath = new HelperMethods().GetProjectBaseDir(HelperMethods.Project.DESKTOP).AbsolutePath;
-                if (HelperMethodsTest.isLocalMachine ?? false)
+                if (isLocalMachine ?? false)
                 {
-                    Assert.IsTrue(Regex.IsMatch(actualPath, expectedPath));
+                    Assert.IsTrue(Regex.IsMatch(actualPath, expectedPath), $"{actualPath} doesnt match to {expectedPath}");
                 }
                 else
                 {
-                    if (!expectedPath.Equals(actualPath))
+                    if (!Regex.IsMatch(actualPath, expectedPath))
                     {
                         Console.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.DESKTOP)}");
                     }
@@ -71,13 +69,13 @@ namespace CsgoDamageVisualizerTests.core.utils
             {
                 string expectedPath = baseDir + "CsgoDamageVisualizerWeb";
                 string actualPath = new HelperMethods().GetProjectBaseDir(HelperMethods.Project.ASPX).AbsolutePath;
-                if (HelperMethodsTest.isLocalMachine ?? false)
+                if (isLocalMachine ?? false)
                 {
-                    Assert.IsTrue(Regex.IsMatch(actualPath, expectedPath));
+                    Assert.IsTrue(Regex.IsMatch(actualPath, expectedPath), $"{actualPath} doesnt match to {expectedPath}");
                 }
                 else
                 {
-                    if (!expectedPath.Equals(actualPath))
+                    if (!Regex.IsMatch(actualPath, expectedPath))
                     {
                         Console.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.ASPX)}");
                     }
@@ -89,13 +87,13 @@ namespace CsgoDamageVisualizerTests.core.utils
             {
                 string expectedPath = baseDir + "CsgoDamageVisualizerTests";
                 string actualPath = new HelperMethods().GetProjectBaseDir(HelperMethods.Project.TEST).AbsolutePath;
-                if (HelperMethodsTest.isLocalMachine ?? false)
+                if (isLocalMachine ?? false)
                 {
-                    Assert.IsTrue(Regex.IsMatch(actualPath, expectedPath));
+                    Assert.IsTrue(Regex.IsMatch(actualPath, expectedPath), $"{actualPath} doesnt match to {expectedPath}");
                 }
                 else
                 {
-                    if (!expectedPath.Equals(actualPath))
+                    if (!Regex.IsMatch(actualPath, expectedPath))
                     {
                         Console.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.TEST)}");
                     }
@@ -105,20 +103,21 @@ namespace CsgoDamageVisualizerTests.core.utils
             [TestMethod]
             public void GetProjectBaseDir_WithSuper_RetunsCorrectDirectory()
             {
-                string expectedPath = baseDir;
+                Console.WriteLine("Running tests " + (isLocalMachine ?? false ? "" : "NOT ") + "on the local machine");
+                string expectedPath = baseDir.Remove(baseDir.Length - 2);
                 string actualPath = new HelperMethods().GetProjectBaseDir(HelperMethods.Project.SUPER).AbsolutePath;
-                if (HelperMethodsTest.isLocalMachine ?? false)
+                if (isLocalMachine ?? false)
                 {
-                    Assert.IsTrue(Regex.IsMatch(actualPath, expectedPath));
+                    Assert.IsTrue(Regex.IsMatch(actualPath, expectedPath), $"{actualPath} doesnt match to {expectedPath}");
                 }
                 else
                 {
-                    if (!expectedPath.Equals(actualPath))
+                    if (!Regex.IsMatch(actualPath, expectedPath))
                     {
                         Console.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.SUPER)}");
                     }
                 }
             }
         }
-    }
+    
 }

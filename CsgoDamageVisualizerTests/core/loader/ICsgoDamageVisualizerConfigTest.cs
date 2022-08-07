@@ -57,7 +57,8 @@ namespace CsgoDamageVisualizerTests.core.loader
         [Description("With a good setup, the instance returns the defined cfg location")]
         public void GetCsgoInstallDir_ReturnsDefinedValueOfImpl()
         {
-            Uri definedUri = new Uri(new HelperMethods().GetProjectBaseDir(HelperMethods.Project.SUPER), @"resources");
+            Uri baseDir = new HelperMethods().GetProjectBaseDir(HelperMethods.Project.TEST);
+            Uri definedUri = new Uri(baseDir, @"resources/core");
             Uri installDir = ICsgoDamageVisualizerConfig.Instance.GetCsgoInstallDir();
             Assert.AreEqual(definedUri, installDir);
         }

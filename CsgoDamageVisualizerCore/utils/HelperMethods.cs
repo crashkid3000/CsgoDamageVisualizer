@@ -64,13 +64,16 @@ namespace CsgoDamageVisualizerCore.utils
                 dirInfo = dirInfo.Parent;
             }
 
+            Uri baseDir = new Uri(dirInfo?.FullName ?? throw new ArgumentException("Could not find base dir: Calling file is not inside any project."));
+
             if (Project.SUPER == project)
             {
-                return new Uri(dirInfo?.FullName ?? throw new ArgumentException("Could not find base dir: Calling file is not inside any project."));
+                return baseDir;
             }
             else
             {
-                return new Uri(new Uri(dirInfo?.FullName ?? throw new ArgumentException("Could not find base dir: Calling file is not inside any project.")), projectDirBaseNames[project]);
+                Uri retVal = new Uri(Path.Combine(baseDir.AbsolutePath, projectDirBaseNames[project])); //new Uri(baseDir, projectDirBaseNames[project]);
+                return retVal;
             }
 
         }

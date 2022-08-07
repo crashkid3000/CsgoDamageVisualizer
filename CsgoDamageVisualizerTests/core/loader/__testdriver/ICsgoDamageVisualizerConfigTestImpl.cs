@@ -23,8 +23,11 @@ namespace CsgoDamageVisualizerTests.core.loader.__testdriver
         }
 
         public Uri GetCsgoInstallDir()
-        {          
-           return new Uri(new HelperMethods().GetProjectBaseDir(HelperMethods.Project.SUPER), @"resources");   
+        {
+            Uri baseDir = new HelperMethods().GetProjectBaseDir(HelperMethods.Project.TEST);
+            string combined = Path.Combine(baseDir.AbsolutePath, "resources/core");
+            Uri retVal = new Uri(combined);
+            return retVal;
         }
     }
 }
