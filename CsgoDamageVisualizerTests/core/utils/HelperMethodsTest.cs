@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using CsgoDamageVisualizerCore.extensions;
 using CsgoDamageVisualizerCore.utils;
 using System.Text.RegularExpressions;
 

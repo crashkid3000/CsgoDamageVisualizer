@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using CsgoDamageVisualizerCore.loader.model;
-using CsgoDamageVisualizerCore.extensions;
+using CsgoDamageVisualizerCore.utils;
 
 namespace CsgoDamageVisualizerCore.loader
 {
