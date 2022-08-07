@@ -25,8 +25,16 @@ namespace CsgoDamageVisualizerCore.utils
             [Project.ASPX] = "CsgoDamageVisualizerWeb",
             [Project.TEST] = "CsgoDamageVisualizerTests"
         };
-
-        public Uri GetProjectBaseDirt(Project project, [CallerFilePath] string sourceFilePath = "a#b")
+        
+        /// <summary>
+        /// Gets the base dir on the local file system of the given project
+        /// </summary>
+        /// <param name="project">The project to choose from</param>
+        /// <param name="sourceFilePath">DO NOT SET THIS VALUE</param>
+        /// <returns></returns>
+        /// <exception cref="Exception">If this value failed to be set automatically</exception>
+        /// <exception cref="ArgumentException">IF the project dir could not be found</exception>
+        public Uri GetProjectBaseDir(Project project, [CallerFilePath] string sourceFilePath = "a#b")
         {
 
             if (sourceFilePath.Equals("a#b"))
@@ -38,7 +46,7 @@ namespace CsgoDamageVisualizerCore.utils
             {
                 dirInfo = dirInfo.Parent;
             }
-            return new Uri(new Uri(dirInfo.FullName), projectDirBaseNames[project]);
+            return new Uri(new Uri(dirInfo?.FullName ?? throw new ArgumentException("Could not find base dir: Calling file is not inside any project.")), projectDirBaseNames[project]);
 
         }
 
