@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using CsgoDamageVisualizerTests.core.loader.__testdriver;
 using CsgoDamageVisualizerCore.loader;
+using CsgoDamageVisualizerCore.utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CsgoDamageVisualizerTests.core.loader
@@ -43,8 +44,8 @@ namespace CsgoDamageVisualizerTests.core.loader
         [Description("With a good setup including a set ConfigIsntanceType, that type is returned upon calling get")]
         public void ConfigInstanceType_SetCorrectType()
         {
-            Type expectedType = typeof(ICsgoDamageVisualizerConfigTestImpl);
-            Type configType = ICsgoDamageVisualizerConfig.ConfigInstanceType;
+            Type? expectedType = typeof(ICsgoDamageVisualizerConfigTestImpl);
+            Type? configType = ICsgoDamageVisualizerConfig.ConfigInstanceType;
             Assert.AreEqual(configType, expectedType);
         }
 
@@ -56,7 +57,7 @@ namespace CsgoDamageVisualizerTests.core.loader
         [Description("With a good setup, the instance returns the defined cfg location")]
         public void GetCsgoInstallDir_ReturnsDefinedValueOfImpl()
         {
-            Uri definedUri = new Uri("C:/somefolder/somefile.404");
+            Uri definedUri = new Uri(new HelperMethods().GetProjectBaseDir(HelperMethods.Project.SUPER), @"resources");
             Uri installDir = ICsgoDamageVisualizerConfig.Instance.GetCsgoInstallDir();
             Assert.AreEqual(definedUri, installDir);
         }

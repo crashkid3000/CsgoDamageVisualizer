@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 using CsgoDamageVisualizerCore.loader;
+using CsgoDamageVisualizerCore.utils;
 
 namespace CsgoDamageVisualizerTests.core.loader.__testdriver
 {
@@ -21,8 +23,8 @@ namespace CsgoDamageVisualizerTests.core.loader.__testdriver
         }
 
         public Uri GetCsgoInstallDir()
-        {
-            return new Uri("C:/somefolder/somefile.404");
+        {          
+           return new Uri(new HelperMethods().GetProjectBaseDir(HelperMethods.Project.SUPER), @"resources");   
         }
     }
 }
