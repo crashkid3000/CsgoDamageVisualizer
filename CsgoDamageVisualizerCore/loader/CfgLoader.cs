@@ -39,7 +39,8 @@ namespace CsgoDamageVisualizerCore.loader
         private Uri? GetConfigFileLocation()
         {
             Uri installDir = iCsgoDamageVisualizerConfig.GetCsgoInstallDir();
-            Uri retVal = new Uri(installDir, @"csgo\scripts\items\items_game.txt");
+            string combined = Path.Combine(installDir.AbsolutePath, "csgo/scripts/items/items_game.txt");
+            Uri retVal = new Uri(combined);
             return retVal;
         }
     }
