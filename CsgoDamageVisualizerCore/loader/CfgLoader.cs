@@ -9,7 +9,7 @@ namespace CsgoDamageVisualizerCore.loader
     /// <summary>
     /// Class that handles the laoding of CSGO's items_game.txt file into memory
     /// </summary>
-    internal class CfgLoader
+    public class CfgLoader
     {
 
         private ICsgoDamageVisualizerConfig iCsgoDamageVisualizerConfig;
