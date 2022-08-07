@@ -102,6 +102,24 @@ namespace CsgoDamageVisualizerTests.core.utils
                     }
                 }
             }
+
+            [TestMethod]
+            public void GetProjectBaseDir_WithSuper_RetunsCorrectDirectory()
+            {
+                string expectedPath = baseDir;
+                string actualPath = new HelperMethods().GetProjectBaseDir(HelperMethods.Project.SUPER).AbsolutePath;
+                if (HelperMethodsTest.isLocalMachine ?? false)
+                {
+                    Assert.IsTrue(Regex.IsMatch(actualPath, expectedPath));
+                }
+                else
+                {
+                    if (!expectedPath.Equals(actualPath))
+                    {
+                        Console.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.SUPER)}");
+                    }
+                }
+            }
         }
     }
 }

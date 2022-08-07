@@ -12,10 +12,26 @@ namespace CsgoDamageVisualizerCore.utils
 
         public enum Project
         {
+            /// <summary>
+            /// The CsgoDamageVisualizerCore project (...\CsgoDamageVisualizerCore)
+            /// </summary>
             CORE,
+            /// <summary>
+            /// The CsgoDamageVisualizerDesktop project (...\CSgtoDamageVisualizer)
+            /// </summary>
             DESKTOP,
+            /// <summary>
+            /// The CsgoDamageVisualizerWeb project (...\CsgoDamageVisualizerWeb)
+            /// </summary>
             ASPX,
-            TEST
+            /// <summary>
+            /// The CsgoDamageVisualizerTests project (...\CsgoDamageVisualizerTests)
+            /// </summary>
+            TEST,
+            /// <summary>
+            /// The base project CsgoDamageVisualizer, containing all the other projects
+            /// </summary>
+            SUPER    
         }
 
         private static Dictionary<Project, string> projectDirBaseNames = new Dictionary<Project, string>()
@@ -23,7 +39,8 @@ namespace CsgoDamageVisualizerCore.utils
             [Project.CORE] = "CsgoDamageVisualizerCore",
             [Project.DESKTOP] = "CSgtoDamageVisualizer",
             [Project.ASPX] = "CsgoDamageVisualizerWeb",
-            [Project.TEST] = "CsgoDamageVisualizerTests"
+            [Project.TEST] = "CsgoDamageVisualizerTests",
+            [Project.SUPER] = "n/A"
         };
         
         /// <summary>
@@ -46,7 +63,15 @@ namespace CsgoDamageVisualizerCore.utils
             {
                 dirInfo = dirInfo.Parent;
             }
-            return new Uri(new Uri(dirInfo?.FullName ?? throw new ArgumentException("Could not find base dir: Calling file is not inside any project.")), projectDirBaseNames[project]);
+
+            if (Project.SUPER == project)
+            {
+                return new Uri(dirInfo?.FullName ?? throw new ArgumentException("Could not find base dir: Calling file is not inside any project."));
+            }
+            else
+            {
+                return new Uri(new Uri(dirInfo?.FullName ?? throw new ArgumentException("Could not find base dir: Calling file is not inside any project.")), projectDirBaseNames[project]);
+            }
 
         }
 
