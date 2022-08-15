@@ -41,7 +41,7 @@ namespace CsgoDamageVisualizerTests.core.utils
                 {
                     if (!Regex.IsMatch(actualPath, expectedPath))
                     {
-                        Console.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.CORE)}");
+                        Console.Error.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.CORE)}");
                     }
                 }
             }
@@ -59,7 +59,7 @@ namespace CsgoDamageVisualizerTests.core.utils
                 {
                     if (!Regex.IsMatch(actualPath, expectedPath))
                     {
-                        Console.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.DESKTOP)}");
+                        Console.Error.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.DESKTOP)}");
                     }
                 }
             }
@@ -77,7 +77,7 @@ namespace CsgoDamageVisualizerTests.core.utils
                 {
                     if (!Regex.IsMatch(actualPath, expectedPath))
                     {
-                        Console.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.ASPX)}");
+                        Console.Error.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.ASPX)}");
                     }
                 }
             }
@@ -95,7 +95,7 @@ namespace CsgoDamageVisualizerTests.core.utils
                 {
                     if (!Regex.IsMatch(actualPath, expectedPath))
                     {
-                        Console.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.TEST)}");
+                        Console.Error.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.TEST)}");
                     }
                 }
             }
@@ -114,7 +114,7 @@ namespace CsgoDamageVisualizerTests.core.utils
                 {
                     if (!Regex.IsMatch(actualPath, expectedPath))
                     {
-                        Console.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.SUPER)}");
+                        Console.Error.WriteLine($"{nameof(GetProjectBaseDir_WithCore_RetunsCorrectDirectory)}: Mismatch between expected and actual path detected: {nameof(HelperMethods.Project.SUPER)}");
                     }
                 }
             }
