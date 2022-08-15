@@ -139,7 +139,7 @@ namespace CsgoDamageVisualizerCore.loader
                 string attributeName, attributeValue;
                 IEnumerable<char> _attribName, _attribVal;
 
-                _attribName = s.SkipWhile(character => !character.Equals('\"')).TakeWhile(character => !character.Equals('\"'));
+                _attribName = s.SkipWhile(character => !character.Equals('\"')).Skip(1).TakeWhile(character => !character.Equals('\"'));
                 attributeName = string.Concat(_attribName);
                 indexAttributeNameStarts = Regex.Match(s, attributeName).Index;
                 indexAttributeNameEnds = indexAttributeNameStarts + attributeName.Length;
