@@ -26,18 +26,28 @@ namespace CsgoDamageVisualizerCore.loader
         public IReadOnlyDictionary<string, CfgWeapon> ParseCfgFile()
         {
             Dictionary<string, CfgWeapon> weapons = new Dictionary<string, CfgWeapon>();
+            CfgWeapon currentWeapon;
 
             CfgLoader loader = new CfgLoader();
             string[] lines = Task.Run(async() => await loader.LoadCfgFileAsync()).Result;
 
             foreach(string line in lines)
             {
-                findNewState(line);
+                State newState = FindNewState(line);
 
-                switch (currentState)
+                switch (newState)
                 {
-
+                        case State.IN_WEAPON_DEFINITION:
+                        {
+                            if(currentState == State.BEFORE_FIRST || currentState == State.BETWEEN_WEAPON_DEFINITION) //if we are now in a weapon definition whereas we weren't before
+                            {
+                                currentWeapon = new CfgWeapon();
+                            }
+                        }
+                        break;
                 }
+
+                currentState = newState;
             }
 
             return weapons;
@@ -61,7 +71,7 @@ namespace CsgoDamageVisualizerCore.loader
 
         
 
-        private void findNewState(string line)
+        private State FindNewState(string line)
         {
             if (Regex.IsMatch(line, OPENING_BRACES_PATTERN)) {
                 currentIndentationLevel++;
@@ -78,8 +88,8 @@ namespace CsgoDamageVisualizerCore.loader
                     {
                         if (Regex.IsMatch(line, WEAPON_PREFAB_START_PATTERN))
                         {
-                            currentState = State.IN_WEAPON_DEFINITION;
                             weaponDefintitionIdentationLevel = currentIndentationLevel;
+                            return State.IN_WEAPON_DEFINITION;
                         }
                         break;
                     }
@@ -87,7 +97,7 @@ namespace CsgoDamageVisualizerCore.loader
                     {
                         if (Regex.IsMatch(line, WEAPON_PREFAB_START_PATTERN))
                         {
-                            currentState = State.IN_WEAPON_DEFINITION;
+                            return State.IN_WEAPON_DEFINITION;
                         }
                         break;
                     }
@@ -96,15 +106,57 @@ namespace CsgoDamageVisualizerCore.loader
                         if (Regex.IsMatch(line, CLOSING_BRACES_PATTERN) && currentIndentationLevel == weaponDefintitionIdentationLevel)
                         {
 
-                            currentState = State.BETWEEN_WEAPON_DEFINITION;
+                            return State.BETWEEN_WEAPON_DEFINITION;
                         }
                         break;
                     }
             }
+            return currentState;
         }
 
-      
 
+        /// <summary>
+        /// Gets the atribute name and the attribute value of a line. A line is only considered when its well-formed, matching  the following pattern:
+        /// 
+        ///     <list type="number">
+        ///     <item>Any ammount of whitespaces (disregarded)</item>
+        ///     <item>A doublt quote ("), marking the begin of the attribute name (not inclusive)</item>
+        ///     <item>Any character, representing the atribute name</item>
+        ///     <item>A seconds double quote, marking the end of the attrivute name (not inclusive)</item>
+        ///     <item>Any number of whitespaces and one double quote (disregarded)</item>
+        ///     <item>Any character, representing the attribute value</item>
+        ///     <item>Either a double quote, a carriage return or a new line, marking the ned of the atribute value (not inclusive)</item>
+        ///     </list>
+        /// 
+        /// </summary>
+        /// <param name="s">The line to scan</param>
+        /// <returns>The attribute name and value as a KeyValuePair. If the line is not well-formed, the key and value will be empty.</returns>
+        public KeyValuePair<string, string> GetAttributeNameAndValueFromLine(string s)
+        {
+            if(Regex.IsMatch(s, @"\s+"".+""\s*""?.+""?")) //regex for attribute assignment: "<attribute name>" "<attribute value>"
+            {
+                int indexAttributeNameStarts, indexAttributeNameEnds;
+                string attributeName, attributeValue;
+                IEnumerable<char> _attribName, _attribVal;
+
+                _attribName = s.SkipWhile(character => !character.Equals('\"')).TakeWhile(character => !character.Equals('\"'));
+                attributeName = string.Concat(_attribName);
+                indexAttributeNameStarts = Regex.Match(s, attributeName).Index;
+                indexAttributeNameEnds = indexAttributeNameStarts + attributeName.Length;
+                s = s.Remove(0, indexAttributeNameEnds);
+                s = s.TrimStart();
+                _attribVal = s.SkipWhile(character => character.Equals('\"') || char.IsWhiteSpace(character)).TakeWhile(character => !character.Equals('\"') || !character.Equals('\r') || !character.Equals('\n'));
+                attributeValue = string.Concat(_attribVal);
+
+                return new KeyValuePair<string, string>(attributeName, attributeValue);
+            }
+            else
+            {
+                return new KeyValuePair<string, string>();
+            }
+
+            
+        }
 
         private enum State
         {
