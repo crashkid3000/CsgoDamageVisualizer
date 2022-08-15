@@ -8,7 +8,12 @@ namespace CsgoDamageVisualizerCore.utils
 {
     public static class ExtensionMethods
     {
-        public static int GetIndentaionLevel(this string s)
+        /// <summary>
+        /// Returns the number of spaces preceeding a line. Tabs and other characters not representing a normal space (e.g. no-break space U+00A0) are not counted.
+        /// </summary>
+        /// <param name="s">The string of which to extract the identation level from</param>
+        /// <returns>The number of spaces used for identation. Always >= 0.</returns>
+        public static int GetSpaceIndentationLevel(this string s)
         {
             bool firstAlphaCharSeen = false;
             return s.Count(c =>
