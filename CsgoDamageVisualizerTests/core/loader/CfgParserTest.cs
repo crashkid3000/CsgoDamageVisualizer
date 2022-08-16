@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using CsgoDamageVisualizerCore.loader;
+using CsgoDamageVisualizerTests.core.loader.__testdriver;
 
 namespace CsgoDamageVisualizerTests.core.loader
 {
@@ -17,9 +18,11 @@ namespace CsgoDamageVisualizerTests.core.loader
         [TestInitialize]
         public void startUp()
         {
+            ICsgoDamageVisualizerConfig.ConfigInstanceType = typeof(ICsgoDamageVisualizerConfigTestImpl);
             cfgParser = new CfgParser();
         }
 
+        #region GetAttributeNameAndValueFromLine tests
 
         [TestMethod]
         public void GetAttributeNameAndValueFromLine_WithWellFormedLineAndSecondPairOfQuotes_ReturnsAttributeNameAndValue()
@@ -59,6 +62,15 @@ namespace CsgoDamageVisualizerTests.core.loader
             KeyValuePair<string, string> attribute = new KeyValuePair<string, string>("a key", "a keyhole");
             string testString = $"{attribute.Key}                  {attribute.Value}";
             Assert.AreEqual(new KeyValuePair<string, string>(), cfgParser.GetAttributeNameAndValueFromLine(testString));
+        }
+
+        #endregion
+
+        [TestMethod]
+        public void ParseCfgFile_WithTestDriverWorks()
+        {
+            IReadOnlyDictionary<string, CfgWeapon> retVal = cfgParser.ParseCfgFile();
+            Assert.IsTrue(retVal.Count > 0);
         }
 
     }

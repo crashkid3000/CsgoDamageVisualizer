@@ -15,9 +15,9 @@ namespace CsgoDamageVisualizerCore.loader
     public class CfgParser
     {
 
-        private const string WEAPON_PREFAB_START_PATTERN = @"\s+weapon_\w+_prefab\s*";
-        private const string OPENING_BRACES_PATTERN = @"\s+\{\s+";
-        private const string CLOSING_BRACES_PATTERN = @"\s+\}\s+";
+        private const string WEAPON_PREFAB_START_PATTERN = @"\s+""weapon_\w+_prefab""\s*";
+        private const string OPENING_BRACES_PATTERN = @"\s*?\{\s*";
+        private const string CLOSING_BRACES_PATTERN = @"\s*?\}\s*";
 
         private State currentState = State.BEFORE_FIRST;
         private int currentIndentationLevel = 0;
@@ -26,10 +26,13 @@ namespace CsgoDamageVisualizerCore.loader
         public IReadOnlyDictionary<string, CfgWeapon> ParseCfgFile()
         {
             Dictionary<string, CfgWeapon> weapons = new Dictionary<string, CfgWeapon>();
-            CfgWeapon currentWeapon;
+            CfgWeapon currentWeapon = new CfgWeapon();
+            IReadOnlyDictionary<string, string> cfgAttributeNameToInternalFieldNameMap = CfgWeapon.GetAttributeNameMap();
 
             CfgLoader loader = new CfgLoader();
             string[] lines = Task.Run(async() => await loader.LoadCfgFileAsync()).Result;
+
+            
 
             foreach(string line in lines)
             {
@@ -37,11 +40,35 @@ namespace CsgoDamageVisualizerCore.loader
 
                 switch (newState)
                 {
-                        case State.IN_WEAPON_DEFINITION:
+                    case State.IN_WEAPON_DEFINITION:
                         {
                             if(currentState == State.BEFORE_FIRST || currentState == State.BETWEEN_WEAPON_DEFINITION) //if we are now in a weapon definition whereas we weren't before
                             {
                                 currentWeapon = new CfgWeapon();
+                            }
+
+                            if (Regex.IsMatch(line, WEAPON_PREFAB_START_PATTERN))
+                            {
+                                currentWeapon.__name = line.Trim();
+                            }
+                            else
+                            {
+                                KeyValuePair<string, string> attributeNameAndValue = GetAttributeNameAndValueFromLine(line);
+                                if(attributeNameAndValue.Key != null && attributeNameAndValue.Value != null && cfgAttributeNameToInternalFieldNameMap.ContainsKey(attributeNameAndValue.Key))
+                                {
+                                    string instanceFieldName = cfgAttributeNameToInternalFieldNameMap[attributeNameAndValue.Key];
+                                    CfgWeapon.SetValue(currentWeapon, instanceFieldName, attributeNameAndValue.Value);
+                                }
+                                
+                            }
+                        }
+                        break;
+
+                    case State.BETWEEN_WEAPON_DEFINITION:
+                        {
+                            if(currentState == State.IN_WEAPON_DEFINITION) //We left a weapon definition block
+                            {
+                                weapons.Add(currentWeapon.__name ?? throw new NullReferenceException("Could not extract prefab name for weapon " + currentWeapon), currentWeapon);
                             }
                         }
                         break;
@@ -156,6 +183,11 @@ namespace CsgoDamageVisualizerCore.loader
             }
 
             
+        }
+
+        public override string ToString()
+        {
+            return $"{nameof(CfgParser)}{{{nameof(currentState)}: {currentState}, {nameof(currentIndentationLevel)}: {currentIndentationLevel}, {nameof(weaponDefintitionIdentationLevel)}: {weaponDefintitionIdentationLevel}}}";
         }
 
         private enum State
