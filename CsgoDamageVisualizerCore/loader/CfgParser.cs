@@ -133,20 +133,20 @@ namespace CsgoDamageVisualizerCore.loader
         /// <returns>The attribute name and value as a KeyValuePair. If the line is not well-formed, the key and value will be empty.</returns>
         public KeyValuePair<string, string> GetAttributeNameAndValueFromLine(string s)
         {
-            if(Regex.IsMatch(s, @"\s+"".+""\s*""?.+""?")) //regex for attribute assignment: "<attribute name>" "<attribute value>"
+            if(Regex.IsMatch(s, @"\s*"".+""\s*""?.+""?")) //regex for attribute assignment: "<attribute name>" "<attribute value>"
             {
-                int indexAttributeNameStarts, indexAttributeNameEnds;
+               
                 string attributeName, attributeValue;
-                IEnumerable<char> _attribName, _attribVal;
-
-                _attribName = s.SkipWhile(character => !character.Equals('\"')).Skip(1).TakeWhile(character => !character.Equals('\"'));
-                attributeName = string.Concat(_attribName);
-                indexAttributeNameStarts = Regex.Match(s, attributeName).Index;
-                indexAttributeNameEnds = indexAttributeNameStarts + attributeName.Length;
-                s = s.Remove(0, indexAttributeNameEnds);
-                s = s.TrimStart();
-                _attribVal = s.SkipWhile(character => character.Equals('\"') || char.IsWhiteSpace(character)).TakeWhile(character => !character.Equals('\"') || !character.Equals('\r') || !character.Equals('\n'));
-                attributeValue = string.Concat(_attribVal);
+                string[] splitLine = (" " + s).Split('\"'); //preface with space to guarantee that the first element is always discardable, even if the actual line starts instantly with a quote (")
+                attributeName = splitLine[1];
+                if(splitLine.Length > 3) //only > 3 if the line has a second pair of quotes for the attribute value
+                {
+                    attributeValue = splitLine[3];
+                }
+                else
+                {
+                    attributeValue = splitLine[2].TrimStart();
+                }
 
                 return new KeyValuePair<string, string>(attributeName, attributeValue);
             }
