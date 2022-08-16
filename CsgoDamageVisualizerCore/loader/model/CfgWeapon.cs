@@ -172,6 +172,10 @@ namespace CsgoDamageVisualizerCore.loader.model
 
         }
 
+        /// <summary>
+        /// Gets which data type the given attribute should be ideally cast to. Default value is float.
+        /// </summary>
+        /// <returns>The mapping of attribute names to their best matching data type</returns>
         public static IReadOnlyDictionary<string, Type> GetCastTypeMap()
         {
             if(castTypeMap.Count > 0)
@@ -189,6 +193,19 @@ namespace CsgoDamageVisualizerCore.loader.model
 
             return castTypeMap;
 
+        }
+
+        /// <summary>
+        /// Sets the value of the given instance using reflection.
+        /// </summary>
+        /// <param name="instance">The instance whoose value shall be set.</param>
+        /// <param name="memberName">The name of the member to be set</param>
+        /// <param name="value">The new value</param>
+        /// <exception cref="NullReferenceException">If the field with the memberName does not exist</exception>
+        public static void SetValue(CfgWeapon instance, string memberName, string value)
+        {
+            FieldInfo field = typeof(CfgWeapon).GetField(memberName, BindingFlags.Instance | BindingFlags.NonPublic) ?? throw new NullReferenceException($"The member {memberName} was not found insice class {nameof(CfgWeapon)}"); ;
+            field.SetValue(instance, value);
         }
     }
 }
