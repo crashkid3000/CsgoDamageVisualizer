@@ -176,7 +176,24 @@ namespace CsgoDamageVisualizerCore.loader.model
         [CfgAttributeType(typeof(bool))]
         [CfgAttributeName("is revolver")]
         internal string? isRevolver;
-
+        [CfgAttributeType(typeof(bool))]
+        [CfgAttributeName("aimsight capable")]
+        internal string? aimsightCapable;
+        [CfgAttributeType(typeof(int))]
+        [CfgAttributeName("aimsight fov")]
+        internal string? aimsightFov;
+        [CfgAttributeType(typeof(int))]
+        [CfgAttributeName("zoom levels")]
+        internal string? zoomLevels;
+        [CfgAttributeType(typeof(int))]
+        [CfgAttributeName("zoom fov 1")]
+        internal string? zoomFov1;
+        [CfgAttributeType(typeof(int))]
+        [CfgAttributeName("zoom fov 2")]
+        internal string? zoomFov2;
+        [CfgAttributeType(typeof(int))]
+        [CfgAttributeName("kill award")]
+        internal string? killAward;
 
         static private Dictionary<string, string> attributeMap = new Dictionary<string, string>();
         static private Dictionary<string, Type> castTypeMap = new Dictionary<string, Type>();

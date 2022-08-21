@@ -1,6 +1,7 @@
 ﻿using CsgoDamageVisualizerCore.loader.model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -101,6 +102,12 @@ namespace CsgoDamageVisualizerCore.model
         private float burstPauseTime = NOT_FILLED_FLOAT;
         private bool hasDetachableSilencer = false;
         private bool isRevolver = false;
+        private bool aimsightCapable = false;
+        private int aimsightFov = NOT_FILLED_INT;
+        private int zoomLevels = NOT_FILLED_INT;
+        private int zoomFov1 = NOT_FILLED_INT;
+        private int zoomFov2 = NOT_FILLED_INT;
+        private int killAward = NOT_FILLED_INT;
 
         #endregion fields
 
@@ -181,7 +188,7 @@ namespace CsgoDamageVisualizerCore.model
         public int MaxPlayerSpeedAlt { get { return mayPlayerSpeedAlt; } init { mayPlayerSpeedAlt = value; } }
         
         /// <summary>
-        /// <para>The price of the weapon.</para><para>Unit: 1$ (US-Dollar)</para>
+        /// <para>The price of the weapon.</para><para>Unit: $1 (US-Dollar)</para>
         /// </summary>
         public int InGamePrice { get { return inGamePrice; } init { inGamePrice = value; } }
         
@@ -459,6 +466,36 @@ namespace CsgoDamageVisualizerCore.model
         /// <para>whether the gun is a double-action gun (with a delay before each shot on the primary fire mode) (<c>true</c>) or not (<c>false</c>)</para>
         /// </summary>
         public bool IsRevolver { get { return isRevolver; } init { isRevolver = value; } }
+
+        /// <summary>
+        /// Whether the gun has CoD-style aiming down sights (<c>true</c>) or not (<c>false</c>)
+        /// </summary>
+        public bool HasAimsights { get { return aimsightCapable; } init { aimsightCapable = value; } }
+
+        /// <summary>
+        /// <para>The FOV while aiming down sights</para><para>Unit: 1° (fka 1 deg)</para>
+        /// </summary>
+        public int AimsightFov { get { return aimsightFov; } init { aimsightFov = value; } }
+
+        /// <summary>
+        /// <para>The number of zoom levels for the gun</para><para>Unit: 1 (zoom level)</para>
+        /// </summary>
+        public int ZoomLevels { get { return zoomLevels; } init { zoomLevels = value; } }
+
+        /// <summary>
+        /// <para>The field of view for the first zoom level</para><para>Unit: 1° (fka 1 deg)</para>
+        /// </summary>
+        public int ZoomFov1 { get { return zoomFov1; } init { zoomFov1 = value; } }
+
+        /// <summary>
+        /// <para>The field of view for the second zoom level</para><para>Unit: 1° (fka 1 deg)</para>
+        /// </summary>
+        public int ZoomFov2 { get { return zoomFov2; } init { zoomFov2 = value; } }
+
+        /// <summary>
+        /// <para>The cash award for geting a kill with the gun</para><para>Unit: $1 (US-Dollar)</para>
+        /// </summary>
+        public int KillAward { get { return killAward; } init { killAward = value; } }
 
         #endregion base properties
 
