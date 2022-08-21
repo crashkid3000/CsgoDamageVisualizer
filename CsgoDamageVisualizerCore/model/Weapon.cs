@@ -45,7 +45,7 @@ namespace CsgoDamageVisualizerCore.model
         private int secondaryDefaultClipSize = NOT_FILLED_INT;
         private bool isFullAuto = false ;
         private int maxPlayerSpeed = NOT_FILLED_INT;
-        private int mayPlayerSpeedAlt = NOT_FILLED_INT;
+        private int maxPlayerSpeedAlt = NOT_FILLED_INT;
         private int inGamePrice = NOT_FILLED_INT;
         private float armorRatio = NOT_FILLED_FLOAT;
         private int crosshairMinDistance = NOT_FILLED_INT;
@@ -130,12 +130,12 @@ namespace CsgoDamageVisualizerCore.model
         /// <summary>
         /// If the weapon is available to the T side
         /// </summary>
-        public bool Terrorists { get { return terrorists; } init { terrorists = value; } }
+        public bool IsTerroristsBuyable { get { return terrorists; } init { terrorists = value; } }
         
         /// <summary>
         /// If the weapon is available to the CTs
         /// </summary>
-        public bool CounterTerrorists { get { return counter_terrorists; } init { counter_terrorists = value; } }
+        public bool IsCounterTerroristsBuyable { get { return counter_terrorists; } init { counter_terrorists = value; } }
         
         /// <summary>
         /// (Assumption) Defines how much muzzle smoke there is after firing
@@ -185,7 +185,7 @@ namespace CsgoDamageVisualizerCore.model
         /// <summary>
         /// <para>The maximum speed the player can move with the weapon in the <i>secondary</i> fire mode. If not defined, the game will use the value from the primary fire mode. For reference: With a knife, the player moves at 250 u/s.</para> <para>Unit: units per second (u/s)</para> 
         /// </summary>
-        public int MaxPlayerSpeedAlt { get { return mayPlayerSpeedAlt; } init { mayPlayerSpeedAlt = value; } }
+        public int MaxPlayerSpeedAlt { get { return maxPlayerSpeedAlt; } init { maxPlayerSpeedAlt = value; } }
         
         /// <summary>
         /// <para>The price of the weapon.</para><para>Unit: $1 (US-Dollar)</para>
@@ -225,10 +225,10 @@ namespace CsgoDamageVisualizerCore.model
         /// <summary>
         /// <para>A multiplier for how much more damage a headshot deals. Default is 4.0.</para><para>Unit: 1</para>
         /// </summary>
-        public float HeadshotMultiplier { get { return headshotMultiplier; } init { headshotMultiplier = value; } }
+        public float HeadshotMultiplier { get { if (headshotMultiplier == NOT_FILLED_INT) { return 4.0f; } else { return headshotMultiplier; } } init { headshotMultiplier = value; } }
         
         /// <summary>
-        /// <para>The range wt which the bullet magically disappears at the latest.</para><para>Unit: unit</para>
+        /// <para>The range at which the bullet magically disappears at the latest.</para><para>Unit: unit</para>
         /// </summary>
         public int Range { get { return range; } init { range = value; } }
         
@@ -240,7 +240,7 @@ namespace CsgoDamageVisualizerCore.model
         /// <summary>
         /// <para>How many bullets/pellets are fired with each shot.</para><para>Unit: 1 (<i>n</i> bullets/pellets fired from one cartridge)</para>
         /// </summary>
-        public int Bullets { get { return bullets; } init { bullets = value; } }
+        public int Bullets { get { if (bullets == NOT_FILLED_INT) { return 1; } else { return bullets; } } init { bullets = value; } }
         
         /// <summary>
         /// <para>How much speed is retained after being hit anywhere (=tagging). This is a multiplier.</para><para>Unit: 1</para>
@@ -480,7 +480,7 @@ namespace CsgoDamageVisualizerCore.model
         /// <summary>
         /// <para>The number of zoom levels for the gun</para><para>Unit: 1 (zoom level)</para>
         /// </summary>
-        public int ZoomLevels { get { return zoomLevels; } init { zoomLevels = value; } }
+        public int ZoomLevels { get { if (zoomLevels == NOT_FILLED_INT) { return 0; } else { return zoomLevels; } } init { zoomLevels = value; } }
 
         /// <summary>
         /// <para>The field of view for the first zoom level</para><para>Unit: 1° (fka 1 deg)</para>
@@ -495,7 +495,7 @@ namespace CsgoDamageVisualizerCore.model
         /// <summary>
         /// <para>The cash award for geting a kill with the gun</para><para>Unit: $1 (US-Dollar)</para>
         /// </summary>
-        public int KillAward { get { return killAward; } init { killAward = value; } }
+        public int KillAward { get { if (killAward == NOT_FILLED_INT) { return 300; } else { return killAward; } } init { killAward = value; } }
 
         #endregion base properties
 
