@@ -47,6 +47,9 @@ namespace CsgoDamageVisualizerCore.loader.model
         [CfgAttributeName("max player speed")]
         [CfgAttributeType(typeof(int))]
         internal string? maxPlayerSpeed;
+        [CfgAttributeName("max player speed alt")]
+        [CfgAttributeType(typeof(int))]
+        internal string? maxPlayerSpeedAlt;
         [CfgAttributeType(typeof(int))]
         [CfgAttributeName("in game price")]
         internal string? inGamePrice;
@@ -133,6 +136,8 @@ namespace CsgoDamageVisualizerCore.loader.model
         internal string? inaccuracyFireAlt;
         [CfgAttributeName("inaccuracy move alt")]
         internal string? inaccuracyMoveAlt;
+        [CfgAttributeName("inaccuracy pitch shift")]
+        internal string? inaccuracyPitchShift;
         [CfgAttributeName("inaccuracy alt sound threshold")]
         internal string? inaccuracyAltSoundThreshold;
         [CfgAttributeName("recovery time crouch alt")]
