@@ -30,6 +30,9 @@ namespace CsgoDamageVisualizerCore.loader.model
         [CfgAttributeName("tracer frequency")]
         internal string? tracerFrequency;
         [CfgAttributeType(typeof(int))]
+        [CfgAttributeName("tracer frequency alt")]
+        internal string? tracerFrequencyAlt;
+        [CfgAttributeType(typeof(int))]
         [CfgAttributeName("primary clip size")]
         internal string? primaryClipSize;
         [CfgAttributeType(typeof(int))]
@@ -114,6 +117,12 @@ namespace CsgoDamageVisualizerCore.loader.model
         internal string? inaccuracyCrouchAlt;
         [CfgAttributeName("inaccuracy stand alt")]
         internal string? inaccuracyStandAlt;
+        [Obsolete("Not used by CSGO game")]
+        [CfgAttributeName("inaccuracy jump initial alt")]
+        internal string? inaccuracyJumpInitialAlt;
+        [Obsolete("Not used by CSGO game")]
+        [CfgAttributeName("inaccuracy jump apex alt")]
+        internal string? inaccuracyJumpApexAlt;
         [CfgAttributeName("inaccuracy jump alt")]
         internal string? inaccuracyJumpAlt;
         [CfgAttributeName("inaccuracy land alt")]
@@ -124,6 +133,8 @@ namespace CsgoDamageVisualizerCore.loader.model
         internal string? inaccuracyFireAlt;
         [CfgAttributeName("inaccuracy move alt")]
         internal string? inaccuracyMoveAlt;
+        [CfgAttributeName("inaccuracy alt sound threshold")]
+        internal string? inaccuracyAltSoundThreshold;
         [CfgAttributeName("recovery time crouch alt")]
         internal string? recoveryTimeCrouchAlt;
         [CfgAttributeName("recovery time stand alt")]
@@ -141,6 +152,26 @@ namespace CsgoDamageVisualizerCore.loader.model
         [CfgAttributeType(typeof(int))]
         [CfgAttributeName("recoil seed alt")]
         internal string? recoilSeedAlt;
+        [CfgAttributeType(typeof(int))]
+        [CfgAttributeName("recovery transition start bullet")]
+        internal string? recoveryTransitionStartBullet;
+        [CfgAttributeType(typeof(int))]
+        [CfgAttributeName("recovery transition end bullet")]
+        internal string? recoveryTransitionEndBullet;
+        [CfgAttributeType(typeof(bool))]
+        [CfgAttributeName("has burst mode")]
+        internal string? hasBurstFire;
+        [CfgAttributeName("cycletime when in burst mode")]
+        internal string? burstCycleTime;
+        [CfgAttributeName("time between burst shots")]
+        internal string? burstPauseTime;
+        [CfgAttributeType(typeof(bool))]
+        [CfgAttributeName("has silencer")]
+        internal string? hasDetachableSilencer;
+        [CfgAttributeType(typeof(bool))]
+        [CfgAttributeName("is revolver")]
+        internal string? isRevolver;
+
 
         static private Dictionary<string, string> attributeMap = new Dictionary<string, string>();
         static private Dictionary<string, Type> castTypeMap = new Dictionary<string, Type>();
