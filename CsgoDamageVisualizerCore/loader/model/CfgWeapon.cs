@@ -140,10 +140,10 @@ namespace CsgoDamageVisualizerCore.loader.model
         internal string? inaccuracyPitchShift;
         [CfgAttributeName("inaccuracy alt sound threshold")]
         internal string? inaccuracyAltSoundThreshold;
-        [CfgAttributeName("recovery time crouch alt")]
-        internal string? recoveryTimeCrouchAlt;
-        [CfgAttributeName("recovery time stand alt")]
-        internal string? recoveryTimeStandAlt;
+        [CfgAttributeName("recovery time crouch final")]
+        internal string? recoveryTimeCrouchFinal;
+        [CfgAttributeName("recovery time stand final")]
+        internal string? recoveryTimeStandFinal;
         [Obsolete("Not used by CSGO game")]
         [CfgAttributeName("recoil angle alt")]
         internal string? recoilAngleAlt;
