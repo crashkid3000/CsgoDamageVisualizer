@@ -35,7 +35,7 @@ namespace CsgoDamageVisualizerCore.model
         private string prefab = "";
         private string item_class = "";
         private bool terrorists = false;
-        private bool counter_terrorists = false;
+        private bool counterTerrorists = false;
         private float heatPerShot = NOT_FILLED_FLOAT;
         private float addonScale = NOT_FILLED_FLOAT;
         private int tracerFrequency = NOT_FILLED_INT;
@@ -49,7 +49,7 @@ namespace CsgoDamageVisualizerCore.model
         private int inGamePrice = NOT_FILLED_INT;
         private float armorRatio = NOT_FILLED_FLOAT;
         private int crosshairMinDistance = NOT_FILLED_INT;
-        private int crosshairDeltaDistalce = NOT_FILLED_INT;
+        private int crosshairDeltaDistance = NOT_FILLED_INT;
         private float cycletime = NOT_FILLED_FLOAT;
         private float penetration = NOT_FILLED_FLOAT;
         private int damage = NOT_FILLED_INT;
@@ -57,8 +57,8 @@ namespace CsgoDamageVisualizerCore.model
         private int range = NOT_FILLED_INT;
         private float rangeModifier = NOT_FILLED_FLOAT;
         private int bullets = NOT_FILLED_INT;
-        private float flinchVelocityMultiplierLarge = NOT_FILLED_FLOAT;
-        private float flinchVelocityMultiplierSmall = NOT_FILLED_FLOAT;
+        private float flinchVelocityModifierLarge = NOT_FILLED_FLOAT;
+        private float flinchVelocityModifierSmall = NOT_FILLED_FLOAT;
         private float spread = NOT_FILLED_FLOAT;
         private float inaccuracyCrouch = NOT_FILLED_FLOAT;
         private float inaccuracyStand = NOT_FILLED_FLOAT;
@@ -95,6 +95,7 @@ namespace CsgoDamageVisualizerCore.model
         private float recoilAngleVarianceAlt = NOT_FILLED_FLOAT;
         private float recoilMagnitudeAlt = NOT_FILLED_FLOAT;
         private float recoilMagnitudeVarianceAlt = NOT_FILLED_FLOAT;
+        private int recoilSeedAlt = NOT_FILLED_INT;
         private int recoveryTransitionStartBullet = NOT_FILLED_INT;
         private int recoveryTransitionEndBullet = NOT_FILLED_INT;
         private bool hasBurstFire = false;
@@ -135,7 +136,7 @@ namespace CsgoDamageVisualizerCore.model
         /// <summary>
         /// If the weapon is available to the CTs
         /// </summary>
-        public bool IsCounterTerroristsBuyable { get { return counter_terrorists; } init { counter_terrorists = value; } }
+        public bool IsCounterTerroristsBuyable { get { return counterTerrorists; } init { counterTerrorists = value; } }
         
         /// <summary>
         /// (Assumption) Defines how much muzzle smoke there is after firing
@@ -205,7 +206,7 @@ namespace CsgoDamageVisualizerCore.model
         /// <summary>
         /// <para>For dynamic crosshairs: How much the crosshair can open.</para><para>Unit: unknown</para>
         /// </summary>
-        public int CrosshairDeltaDistalce { get { return crosshairDeltaDistalce; } init { crosshairDeltaDistalce = value; } }
+        public int CrosshairDeltaDistance { get { return crosshairDeltaDistance; } init { crosshairDeltaDistance = value; } }
         
         /// <summary>
         /// <para>The time delay between each bullet.</para><para>Unit: s</para>
@@ -245,12 +246,12 @@ namespace CsgoDamageVisualizerCore.model
         /// <summary>
         /// <para>How much speed is retained after being hit anywhere (=tagging). This is a multiplier.</para><para>Unit: 1</para>
         /// </summary>
-        public float FlinchVelocityMultiplierLarge { get { return flinchVelocityMultiplierLarge; } init { flinchVelocityMultiplierLarge = value; } }
+        public float FlinchVelocityModifierLarge { get { return flinchVelocityModifierLarge; } init { flinchVelocityModifierLarge = value; } }
         
         /// <summary>
         /// <para>(Assumption) How much speed is retained after being hit on the legs, but this is unconfirmed, so it may be a useless value after all. This is a multiplier.</para><para>Unit: 1</para>
         /// </summary>
-        public float FlinchVelocityMultiplierSmall { get { return flinchVelocityMultiplierSmall; } init { flinchVelocityMultiplierSmall = value; } }
+        public float FlinchVelocityModifierSmall { get { return flinchVelocityModifierSmall; } init { flinchVelocityModifierSmall = value; } }
         
         /// <summary>
         /// <para>The base spread of the weapon in the <i>primary</i> fire mode. Note that the bullet density is skewed towards the center with this one, unlike other inaccuracy values. If no secondary value is defined, the game will use this value for the secondary fire mode.</para><para>Unit: 1 ia</para>
@@ -432,6 +433,11 @@ namespace CsgoDamageVisualizerCore.model
         /// </summary>
         public float RecoilMagnitudeVarianceAlt { get { return recoilMagnitudeVarianceAlt; } init { recoilMagnitudeVarianceAlt = value; } }
 
+        /// <summary>
+        /// The alternative recoild seed for the <i>secondary</i> fire mode.
+        /// </summary>
+        public int RecoilSeedAlt { get { return recoilSeedAlt; } init { recoilSeedAlt = value; } }
+        
         /// <summary>
         /// <para>When the transition from the primary to the secondary fire mode starts</para><para>Unit: 1 (shot)</para>
         /// </summary>
