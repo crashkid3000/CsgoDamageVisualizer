@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace CsgoDamageVisualizerCore.model
 {
@@ -17,8 +18,11 @@ namespace CsgoDamageVisualizerCore.model
     {
         public Weapon() { }
 
-        public Weapon(CfgWeapon model) { 
-            
+        public Weapon(CfgWeapon model) {
+            IReadOnlyDictionary<string, Type> castTypeMap = CfgWeapon.GetCastTypeMap();
+            FieldInfo[] thisFields = typeof(Weapon).GetFields(BindingFlags.NonPublic | BindingFlags.Instance);
+            for(FieldInfo field)
+
         }
 
         public Weapon(CfgWeapon model, CfgWeapon prefab)
@@ -30,6 +34,7 @@ namespace CsgoDamageVisualizerCore.model
 
         private static readonly int NOT_FILLED_INT = -483792;
         private static readonly float NOT_FILLED_FLOAT = -425233.9f;
+        private static readonly Dictionary<string, string> displayNameDictionary = new Dictionary<string, string>();
 
         private string name = "";
         private string prefab = "";
@@ -506,6 +511,71 @@ namespace CsgoDamageVisualizerCore.model
         #endregion base properties
 
         #region expanded properties
+
+        /// <summary>
+        /// The in-game name of the weapon
+        /// </summary>
+        public string DisplayName { get
+            {
+                if(displayNameDictionary.Count == 0)
+                {
+                    displayNameDictionary["weapon_deagle"] = "Desert Eagle";
+                    displayNameDictionary["weapon_revolver"] = "R8 Revolver";
+                    displayNameDictionary["weapon_elite"] = "Dual Berettas";
+                    displayNameDictionary["weapon_fiveseven"] = "Five-seveN";
+                    displayNameDictionary["weapon_glock"] = "Glock-18";
+                    displayNameDictionary["weapon_hkp2000"] = "P2000";
+                    displayNameDictionary["weapon_usp_silencer"] = "USP-S";
+                    displayNameDictionary["weapon_p250"] = "P250";
+                    displayNameDictionary["weapon_cz75a"] = "CZ-75 Auto";
+                    displayNameDictionary["weapon_tec9"] = "Tec-9";
+
+                    displayNameDictionary["weapon_mag7"] = "MAG-7";
+                    displayNameDictionary["weapon_nova"] = "Nova";
+                    displayNameDictionary["weapon_sawedoff"] = "Sawed-off";
+                    displayNameDictionary["weapon_xm1014"] = "XM1014";
+                    
+                    displayNameDictionary["weapon_bizon"] = "PP-Bizon";
+                    displayNameDictionary["weapon_mac10"] = "MAC-10";
+                    displayNameDictionary["weapon_mp7"] = "MP7";
+                    displayNameDictionary["weapon_mp5sd"] = "MP5SD";
+                    displayNameDictionary["weapon_mp9"] = "MP9";
+                    displayNameDictionary["weapon_p90"] = "P90";
+                    displayNameDictionary["weapon_ump45"] = "UMP 45";
+                    
+                    displayNameDictionary["weapon_ak47"] = "AK-47";
+                    displayNameDictionary["weapon_aug"] = "AUG";
+                    displayNameDictionary["weapon_famas"] = "FAMAS";
+                    displayNameDictionary["weapon_galilar"] = "Galil AR";
+                    displayNameDictionary["weapon_m4a1"] = "M4A4";
+                    displayNameDictionary["weapon_m4a1_silencer"] = "M4A1-S"; 
+                    displayNameDictionary["weapon_sg556"] = "SG553";
+                    
+                    displayNameDictionary["weapon_m249"] = "M249";
+                    displayNameDictionary["weapon_negev"] = "Negev";
+                    
+                    displayNameDictionary["weapon_ssg08"] = "SSG 08";
+                    displayNameDictionary["weapon_scar20"] = "SCAR-20";
+                    displayNameDictionary["weapon_g3sg1"] = "G3SG1";
+                    displayNameDictionary["weapon_awp"] = "AWP";
+                }
+                return displayNameDictionary[this.Name] ?? "Unknown";
+            } }
+
+        /// <summary>
+        /// Whether the gun has any zoom levels (<c>true</c>) or not (<c>false</c>)
+        /// </summary>
+        public bool HasZoomLevels { get { return ZoomLevels != 0; } }
+
+        /// <summary>
+        /// The inaccuracy immeadiately after jumping, i.e. the sum of <c>InaccuracyJump</c> and <c>InaccuracyJumpAlt</c>, in the <i>primary</i> fire mode.
+        /// </summary>
+        public float InacuracyJumpSum {  get { return InaccuracyJump + InaccuracyJumpInitial; } }
+
+        /// <summary>
+        /// The inaccuracy immeadiately after jumping, i.e. the sum of <c>InaccuracyJump</c> and <c>InaccuracyJumpAlt</c>, in the <i>primary</i> fire mode.
+        /// </summary>
+        public float InacuracyJumpAltSum { get { return InaccuracyJumpAlt + InaccuracyJumpInitialAlt; } }
 
         #endregion expanded properties
 
