@@ -260,5 +260,32 @@ namespace CsgoDamageVisualizerCore.loader.model
             FieldInfo field = typeof(CfgWeapon).GetField(memberName, BindingFlags.Instance | BindingFlags.NonPublic) ?? throw new NullReferenceException($"The member {memberName} was not found insice class {nameof(CfgWeapon)}"); ;
             field.SetValue(instance, value);
         }
+
+        public static string GetStringValue(CfgWeapon instance, string memberName)
+        {
+            FieldInfo field = typeof(CfgWeapon).GetField(memberName, BindingFlags.Instance | BindingFlags.NonPublic) ?? throw new NullReferenceException($"The member {memberName} was not found insice class {nameof(CfgWeapon)}"); ;
+            return (string)field.GetValue(instance);
+        }
+
+        public static int GetIntValue(CfgWeapon instance, string memberName)
+        {
+            FieldInfo field = typeof(CfgWeapon).GetField(memberName, BindingFlags.Instance | BindingFlags.NonPublic) ?? throw new NullReferenceException($"The member {memberName} was not found insice class {nameof(CfgWeapon)}"); ;
+            string value = (string)field.GetValue(instance);
+            return Convert.ToInt32(value);
+        }
+
+        public static float GetFloatValue(CfgWeapon instance, string memberName)
+        {
+            FieldInfo field = typeof(CfgWeapon).GetField(memberName, BindingFlags.Instance | BindingFlags.NonPublic) ?? throw new NullReferenceException($"The member {memberName} was not found insice class {nameof(CfgWeapon)}"); ;
+            string value = (string)field.GetValue(instance);
+            return float.Parse(value);
+        }
+
+        public static bool GetBoolValue(CfgWeapon instance, string memberName)
+        {
+            FieldInfo field = typeof(CfgWeapon).GetField(memberName, BindingFlags.Instance | BindingFlags.NonPublic) ?? throw new NullReferenceException($"The member {memberName} was not found insice class {nameof(CfgWeapon)}"); ;
+            string value = (string)field.GetValue(instance);
+            return Convert.ToBoolean(value);
+        }
     }
 }
