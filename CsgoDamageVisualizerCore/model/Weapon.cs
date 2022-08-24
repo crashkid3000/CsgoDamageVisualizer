@@ -19,25 +19,106 @@ namespace CsgoDamageVisualizerCore.model
         public Weapon() { }
 
         public Weapon(CfgWeapon model) {
-            this.Name = model.__name?.Substring(0, model.__name.Length - "_prefab".Length) ?? throw new NullReferenceException($"The {nameof(model.__name)} must not be null!");
+            
             PropertyInfo[] properties = typeof(Weapon).GetProperties(BindingFlags.Instance | BindingFlags.Public);
             foreach(PropertyInfo property in properties)
             {
                 WeaponPropertyMapping? weaponPropertyMappingAttribute = (WeaponPropertyMapping?) property.GetCustomAttribute(typeof(WeaponPropertyMapping));
-                if (weaponPropertyMappingAttribute != null)
+                if (weaponPropertyMappingAttribute != null && weaponPropertyMappingAttribute.CfgWeaponFieldName != WeaponPropertyMapping.NO_CONVERSION)
                 {
-                    if (property.PropertyType.Equals(typeof(bool)))
+                    if(property.PropertyType.Equals(typeof(float)))
                     {
-                        property.SetValue(this, CfgWeapon.GetBoolValue(model, weaponPropertyMappingAttribute.CfgWeaponFieldName))
+                        
+                        property.SetValue(this, CfgWeapon.GetFloatValue(model, weaponPropertyMappingAttribute.CfgWeaponFieldName));
+                    }
+                    else
+                    {
+                        if(property.PropertyType.Equals(typeof(int)))
+                        {
+                            property.SetValue(this, CfgWeapon.GetIntValue(model, weaponPropertyMappingAttribute.CfgWeaponFieldName));
+                        }
+                        else
+                        {
+                            if (property.PropertyType.Equals(typeof(bool)))
+                            {
+                                property.SetValue(this, CfgWeapon.GetBoolValue(model, weaponPropertyMappingAttribute.CfgWeaponFieldName));
+                            }
+                            else
+                            {
+                                if(property.PropertyType == typeof(string))
+                                {
+                                    property.SetValue(this, CfgWeapon.GetStringValue(model, weaponPropertyMappingAttribute.CfgWeaponFieldName));
+                                }
+                                else
+                                {
+                                    throw new Exception("Cannot convert CfgWeapon to Weapon for type " + property.PropertyType.Name);
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (!property.Name.Equals(nameof(Weapon.Name)) && (weaponPropertyMappingAttribute != null && !weaponPropertyMappingAttribute.CfgWeaponFieldName.Equals(WeaponPropertyMapping.NO_CONVERSION)))
+                    {
+                        Console.WriteLine($"Warning: No WeaponPropertyMapping has been set for property {nameof(Weapon)}.{property.Name}");
                     }
                 }
             }
 
+            this.Name = model.__name?.Substring(0, model.__name.Length - "_prefab".Length) ?? throw new NullReferenceException($"The {nameof(model.__name)} must not be null!");
+
         }
 
-        public Weapon(CfgWeapon model, CfgWeapon prefab)
+        public Weapon(CfgWeapon model, CfgWeapon prefab): this(prefab)
         {
+            PropertyInfo[] properties = typeof(Weapon).GetProperties(BindingFlags.Instance | BindingFlags.Public);
+            foreach (PropertyInfo property in properties)
+            {
+                WeaponPropertyMapping? weaponPropertyMappingAttribute = (WeaponPropertyMapping?)property.GetCustomAttribute(typeof(WeaponPropertyMapping));
+                if (weaponPropertyMappingAttribute != null)
+                {
+                    if (property.PropertyType.Equals(typeof(float)))
+                    {
 
+                        property.SetValue(this, CfgWeapon.GetFloatValue(model, weaponPropertyMappingAttribute.CfgWeaponFieldName));
+                    }
+                    else
+                    {
+                        if (property.PropertyType.Equals(typeof(int)))
+                        {
+                            property.SetValue(this, CfgWeapon.GetIntValue(model, weaponPropertyMappingAttribute.CfgWeaponFieldName));
+                        }
+                        else
+                        {
+                            if (property.PropertyType.Equals(typeof(bool)))
+                            {
+                                property.SetValue(this, CfgWeapon.GetBoolValue(model, weaponPropertyMappingAttribute.CfgWeaponFieldName));
+                            }
+                            else
+                            {
+                                if (property.PropertyType == typeof(string))
+                                {
+                                    property.SetValue(this, CfgWeapon.GetStringValue(model, weaponPropertyMappingAttribute.CfgWeaponFieldName));
+                                }
+                                else
+                                {
+                                    throw new Exception("Cannot convert CfgWeapon to Weapon for type " + property.PropertyType.Name);
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (!property.Name.Equals(nameof(Weapon.Name)))
+                    {
+                        Console.Write($"Warning: No WeaponPropertyMapping has been set for property {nameof(Weapon)}.{property.Name}");
+                    }
+                }
+            }
+
+            this.Name = model.__name?.Substring(0, model.__name.Length - "_prefab".Length) ?? throw new NullReferenceException($"The {nameof(model.__name)} must not be null!");
         }
 
         private static bool IsDefaultValue(int i) => i == NOT_FILLED_INT;
@@ -136,7 +217,7 @@ namespace CsgoDamageVisualizerCore.model
         /// The internal name of the weapon, usualy starting with "weapon_"
         /// </summary>
         [WeaponPropertyMapping(nameof(CfgWeapon.__name))]
-        public string Name { get { return name; } init { if (name == "") { name = value; } else { Console.WriteLine($"Variable {nameof(Weapon)}.{nameof(Name)} alrady has a value assigned to it!"); } } }
+        public string Name { get { return name; } init { name = value; } }
 
         /// <summary>
         /// The type of the weapon (secondary, machinegun etc). Only important for bots, mission design (e.g. kill X people with a <i>machinegun</i>), etc. and does not effect the player directly.
