@@ -197,6 +197,8 @@ namespace CsgoDamageVisualizerCore.loader.model
 
         static private Dictionary<string, string> attributeMap = new Dictionary<string, string>();
         static private Dictionary<string, Type> castTypeMap = new Dictionary<string, Type>();
+        private static readonly int NOT_FILLED_INT = -483792;
+        private static readonly float NOT_FILLED_FLOAT = -425233.9f;
 
         /// <summary>
         /// Creates the map of attribute names to field names. However, if one already exists, it returns that one.
@@ -264,27 +266,39 @@ namespace CsgoDamageVisualizerCore.loader.model
         public static string GetStringValue(CfgWeapon instance, string memberName)
         {
             FieldInfo field = typeof(CfgWeapon).GetField(memberName, BindingFlags.Instance | BindingFlags.NonPublic) ?? throw new NullReferenceException($"The member {memberName} was not found insice class {nameof(CfgWeapon)}"); ;
-            return (string)field.GetValue(instance);
+            return (string)(field.GetValue(instance) ?? "");
         }
 
         public static int GetIntValue(CfgWeapon instance, string memberName)
         {
             FieldInfo field = typeof(CfgWeapon).GetField(memberName, BindingFlags.Instance | BindingFlags.NonPublic) ?? throw new NullReferenceException($"The member {memberName} was not found insice class {nameof(CfgWeapon)}"); ;
-            string value = (string)field.GetValue(instance);
+            string? value = (string?)field.GetValue(instance);
+            if(value == null)
+            {
+                return NOT_FILLED_INT;
+            }
             return Convert.ToInt32(value);
         }
 
         public static float GetFloatValue(CfgWeapon instance, string memberName)
         {
             FieldInfo field = typeof(CfgWeapon).GetField(memberName, BindingFlags.Instance | BindingFlags.NonPublic) ?? throw new NullReferenceException($"The member {memberName} was not found insice class {nameof(CfgWeapon)}"); ;
-            string value = (string)field.GetValue(instance);
+            string? value = (string?)field.GetValue(instance);
+            if(value == null)
+            {
+                return NOT_FILLED_FLOAT;
+            }
             return float.Parse(value);
         }
 
         public static bool GetBoolValue(CfgWeapon instance, string memberName)
         {
             FieldInfo field = typeof(CfgWeapon).GetField(memberName, BindingFlags.Instance | BindingFlags.NonPublic) ?? throw new NullReferenceException($"The member {memberName} was not found insice class {nameof(CfgWeapon)}"); ;
-            string value = (string)field.GetValue(instance);
+            string? value = (string?)field.GetValue(instance);
+            if(value == null)
+            {
+                return false;
+            }
             return Convert.ToBoolean(value);
         }
     }
