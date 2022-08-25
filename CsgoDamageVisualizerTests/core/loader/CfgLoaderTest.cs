@@ -35,7 +35,7 @@ namespace CsgoDamageVisualizerTests.core.loader
             while (!lines.IsCompleted)
             {
                 Console.Write(".");
-                Thread.Sleep(10);
+                Thread.Sleep(5);
             }
             Console.WriteLine();
             Assert.IsNotNull(lines.Result);
