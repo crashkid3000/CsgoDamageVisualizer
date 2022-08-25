@@ -111,9 +111,9 @@ namespace CsgoDamageVisualizerCore.model
                 }
                 else
                 {
-                    if (!property.Name.Equals(nameof(Weapon.Name)))
+                    if (!property.Name.Equals(nameof(Weapon.Name)) && (weaponPropertyMappingAttribute != null && !weaponPropertyMappingAttribute.CfgWeaponFieldName.Equals(WeaponPropertyMapping.NO_CONVERSION)))
                     {
-                        Console.Write($"Warning: No WeaponPropertyMapping has been set for property {nameof(Weapon)}.{property.Name}");
+                        Console.WriteLine($"Warning: No WeaponPropertyMapping has been set for property {nameof(Weapon)}.{property.Name}");
                     }
                 }
             }
@@ -732,7 +732,14 @@ namespace CsgoDamageVisualizerCore.model
                     displayNameDictionary["weapon_g3sg1"] = "G3SG1";
                     displayNameDictionary["weapon_awp"] = "AWP";
                 }
-                return displayNameDictionary[this.Name] ?? "Unknown";
+                if (displayNameDictionary.ContainsKey(this.Name))
+                {
+                    return displayNameDictionary[this.Name];
+                }
+                else
+                {
+                    return "<Unknown>";
+                }
             } }
 
         /// <summary>
