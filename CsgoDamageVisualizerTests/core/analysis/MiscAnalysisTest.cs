@@ -34,14 +34,14 @@ namespace CsgoDamageVisualizerTests.core.analysis
 
         [TestMethod]
         public void MaxPlayerSpeedRelative_Works() {
-            float expectedResult = weapon.MaxPlayerSpeed / 250.0f;
+            float expectedResult = weapon.MaxPlayerSpeed / MiscAnalysis.KnifeSpeed;
             Assert.AreEqual(expectedResult, analysis.MaxPlayerSpeedRelative);
         }
 
         [TestMethod]
         public void MaxPlayerSpeedAltRelative_Works()
         {
-            float expectedResult = weapon.MaxPlayerSpeedAlt / 250.0f;
+            float expectedResult = weapon.MaxPlayerSpeedAlt / MiscAnalysis.KnifeSpeed;
             Assert.AreEqual(expectedResult, analysis.MaxPlayerSpeedAltRelative);
         }
     }
