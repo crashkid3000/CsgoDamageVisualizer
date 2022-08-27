@@ -121,10 +121,6 @@ namespace CsgoDamageVisualizerCore.model
             this.Name = model.__name?.Substring(0, model.__name.Length - "_prefab".Length) ?? throw new NullReferenceException($"The {nameof(model.__name)} must not be null!");
         }
 
-        private static bool IsDefaultValue(int i) => i == NOT_FILLED_INT;
-        private static bool IsDefaultValue(float f) => f == NOT_FILLED_FLOAT;
-        private static bool IsSet(string? s) => s != null;
-
         #region fields
 
         private static readonly int NOT_FILLED_INT = -483792;
