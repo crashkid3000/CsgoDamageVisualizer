@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:CSgtoDamageVisualizer"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary Source="resources/CustomStylings.xaml"/>
     </Application.Resources>
 </Application>

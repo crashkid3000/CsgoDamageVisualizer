@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CsgoDamageVisualizerDesktop.customUi;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,13 @@ namespace CSgtoDamageVisualizer
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void textBox_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine("enter");
+            
+            
         }
     }
 }
