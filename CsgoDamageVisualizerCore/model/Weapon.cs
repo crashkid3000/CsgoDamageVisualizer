@@ -12,7 +12,7 @@ namespace CsgoDamageVisualizerCore.model
     /// <summary>
     /// <para>The stats of a weapon. Note that not every value needs to be filled.</para>
     /// <para><u>Regarding "units"</u>: With entities in Source (incl. the player), they use so-called "units" to measure stuff. 1 unit = 1 inch ~= 2.54 cm</para>
-    /// <para><u>Regarding "ia"</u>: I call them "inaccuracy units". I don't exactly know what they represent yet, but they can be added to each other. Also, the formula to convert a value to the "effective range" is 152.4 [mm]/x [ia]=range [m]</para>
+    /// <para><u>Regarding "ia"</u>: I call them "inaccuracy units", but in reality, its the tangens of the opening angle of the spread cone (i.e. the angle between the height and the surface line of the cone), divided by 1,000. Also, the formula to convert a value to the "effective range" in meters = <c>152.4[mm]/ia</c> </para>
     /// </summary>
     public class Weapon
     {
