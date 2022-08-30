@@ -123,8 +123,8 @@ namespace CsgoDamageVisualizerCore.model
 
         #region fields
 
-        private static readonly int NOT_FILLED_INT = -483792;
-        private static readonly float NOT_FILLED_FLOAT = -425233.9f;
+        internal static readonly int NOT_FILLED_INT = -483792;
+        internal static readonly float NOT_FILLED_FLOAT = -425233.9f;
         private static readonly Dictionary<string, string> displayNameDictionary = new Dictionary<string, string>();
 
         private string name = "";
