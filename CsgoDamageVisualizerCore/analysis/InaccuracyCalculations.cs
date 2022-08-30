@@ -13,7 +13,7 @@ namespace CsgoDamageVisualizerCore.analysis
     {
 
         /// <summary>
-        /// <para>The radius of the head in CSGO.</para> <para>Unit:</u>mm</para><u>
+        /// <para>The radius of the head in CSGO.</para> <para><u>Unit:</u> 1 mm</para>
         /// </summary>
         public float HeadRadius { get { return 152.4f; } } //6 inches/6 units
 
@@ -21,6 +21,11 @@ namespace CsgoDamageVisualizerCore.analysis
         /// <para>An assumption of the radius of the body hitbox for a guaranteed hit, i.e. the acutal hitbox is bigger than that.</para><para><u>Unit:</u> mm</para> 
         /// </summary>
         public float BodyRadius { get { return 203.2f; } } //8 inches / 8 units
+
+        /// <summary>
+        /// The exponent, defining how much inaccuracy is left after one <c>RecoveryTimeXXX</c> period has passed
+        /// </summary>
+        public float InaccuracyDecayExponent { get { return 0.1f; } } //unit: 1 
 
         /// <summary>
         /// <para>Calculates the accurate range for a headshot, i.e. where a bullet will 100% hit the head.</para>
@@ -63,8 +68,17 @@ namespace CsgoDamageVisualizerCore.analysis
             return (int)Math.Round(retVal);
         }
 
-
-
-
+        /// <summary>
+        /// Calculates how much the extra inaccuracy remains since the extra inaccuracy has been added
+        /// </summary>
+        /// <param name="extraInaccuracy">The extra inaccuracy that will decay over time. <u>Unit:</u> 1 ia</param>
+        /// <param name="recoveryTime">The recovery time of a weapon. <u>Unit:</u> 1 s</param>
+        /// <param name="timeSinceGaining">The time that has passed since gaining that inaccuracy. <u>Unit:</u> 1 s</param>
+        /// <returns>The remaining extra inaccuracy after time <c>timeSinceGaining</c> has passed. <u>Unit:</u> 1 s</returns>
+        public float CalculateExtraInaccuracyAfterTime(float extraInaccuracy, float recoveryTime, float timeSinceGaining)
+        {
+            return extraInaccuracy * (float) Math.Pow(InaccuracyDecayExponent, timeSinceGaining / recoveryTime);
+        }
+        
     }
 }
