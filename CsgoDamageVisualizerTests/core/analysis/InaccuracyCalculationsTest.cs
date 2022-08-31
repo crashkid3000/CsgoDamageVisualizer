@@ -127,7 +127,7 @@ namespace CsgoDamageVisualizerTests.core.analysis
 
             float calculatedInaccuracy = inaccuracyCalculations.CalculateExtraInaccuracyAfterTime(inaccuracy, recoveryTime, recoveryTime);
 
-            Assert.AreEqual(inaccuracy * inaccuracyCalculations.InaccuracyDecayExponent, calculatedInaccuracy);
+            Assert.AreEqual(inaccuracy * InaccuracyCalculations.InaccuracyDecayExponent, calculatedInaccuracy);
         }
         
         [TestMethod]

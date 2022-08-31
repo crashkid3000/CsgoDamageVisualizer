@@ -15,17 +15,17 @@ namespace CsgoDamageVisualizerCore.analysis
         /// <summary>
         /// <para>The radius of the head in CSGO.</para> <para><u>Unit:</u> 1 mm</para>
         /// </summary>
-        public float HeadRadius { get { return 152.4f; } } //6 inches/6 units
+        public static float HeadRadius { get { return 152.4f; } } //6 inches/6 units
 
         /// <summary>
         /// <para>An assumption of the radius of the body hitbox for a guaranteed hit, i.e. the acutal hitbox is bigger than that.</para><para><u>Unit:</u> mm</para> 
         /// </summary>
-        public float BodyRadius { get { return 203.2f; } } //8 inches / 8 units
+        public static float BodyRadius { get { return 203.2f; } } //8 inches / 8 units
 
         /// <summary>
         /// The exponent, defining how much inaccuracy is left after one <c>RecoveryTimeXXX</c> period has passed
         /// </summary>
-        public float InaccuracyDecayExponent { get { return 0.1f; } } //unit: 1 
+        public static float InaccuracyDecayExponent { get { return 0.1f; } } //unit: 1 
 
         /// <summary>
         /// <para>Calculates the accurate range for a headshot, i.e. where a bullet will 100% hit the head.</para>
