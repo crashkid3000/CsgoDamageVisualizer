@@ -119,6 +119,8 @@ namespace CsgoDamageVisualizerCore.model
             }
 
             this.Name = model.__name?.Substring(0, model.__name.Length - "_prefab".Length) ?? throw new NullReferenceException($"The {nameof(model.__name)} must not be null!");
+            this.InaccuracyLand = this.InaccuracyLand * 1000; //InaccuracyLand still uses CS:Source-style notation of inaccuracy. This calculation corrects that.
+            this.InaccuracyLandAlt = this.InaccuracyLandAlt * 1000; //InaccuracyLandAlt still uses CS:Source-style notation of inaccuracy. This calculation corrects that.
         }
 
         #region fields
