@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Globalization;
 
 namespace CsgoDamageVisualizerCore.loader.model
 {
@@ -258,7 +259,7 @@ namespace CsgoDamageVisualizerCore.loader.model
         /// <param name="value">The new value</param>
         /// <exception cref="NullReferenceException">If the field with the memberName does not exist</exception>
         public static void SetValue(CfgWeapon instance, string memberName, string value)
-        {
+        {         
             FieldInfo field = typeof(CfgWeapon).GetField(memberName, BindingFlags.Instance | BindingFlags.NonPublic) ?? throw new NullReferenceException($"The member {memberName} was not found insice class {nameof(CfgWeapon)}"); ;
             field.SetValue(instance, value);
         }
@@ -288,7 +289,7 @@ namespace CsgoDamageVisualizerCore.loader.model
             {
                 return NOT_FILLED_FLOAT;
             }
-            return float.Parse(value);
+            return float.Parse(value, CultureInfo.InvariantCulture);
         }
 
         public static bool GetBoolValue(CfgWeapon instance, string memberName)
