@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
+using CsgoDamageVisualizerCore.analysis;
 using CsgoDamageVisualizerCore.model;
 
 namespace CsgoDamageVisualizerCore.utils
@@ -45,5 +46,25 @@ namespace CsgoDamageVisualizerCore.utils
             return primaryValue.Equals("") ? backupValue : primaryValue;
         }
 #pragma warning restore
+
+        /// <summary>
+        /// Whether the position means one is standing (<c>true</c>) or crouching (<c>false</c>)
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public static bool IsStanding(this StationaryInaccuracy position)
+        {
+            return position.Equals(StationaryInaccuracy.STANDING) || position.Equals(StationaryInaccuracy.STANDING_ALT);
+        }
+
+        /// <summary>
+        /// Whether the position means one uses the primary fire mode (<c>true</c>) or not (<c>false</c>)
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public static bool IsPrimaryFireMode(this StationaryInaccuracy position)
+        {
+            return position.Equals(StationaryInaccuracy.STANDING) || position.Equals(StationaryInaccuracy.CROUCHING);
+        }
     }
 }
