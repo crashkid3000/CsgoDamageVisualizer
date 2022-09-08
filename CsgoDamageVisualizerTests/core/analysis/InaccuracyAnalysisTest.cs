@@ -110,5 +110,33 @@ namespace CsgoDamageVisualizerTests.core.analysis
             Assert.AreEqual(expectedValue, (float)Math.Round(inaccuracyAnalysis.LadderInaccuracyAlt, 2));
         }
 
+        [TestMethod]
+        public void JumpApexInaccuracyWorks()
+        {
+            float expectedValue = 115.41f;
+            Assert.AreEqual(expectedValue, inaccuracyAnalysis.JumpingApexInaccuracy);
+        }
+        [TestMethod]
+
+        public void JumpApexInaccuracyAltWorks()
+        {
+            float expectedValue = 113.11f;
+            Assert.AreEqual(expectedValue, inaccuracyAnalysis.JumpingApexInaccuracyAlt);
+        }
+
+        [TestMethod]
+        public void JumpInitialInaccuracyWorks()
+        {
+            float expectedValue = 194.2f;
+            Assert.AreEqual(expectedValue, (float)Math.Round(inaccuracyAnalysis.JumpingInitialInaccuracy, 2));
+        }
+        [TestMethod]
+
+        public void JumpInitialInaccuracyAltWorks()
+        {
+            float expectedValue = 109.3f;
+            Assert.AreEqual(expectedValue, inaccuracyAnalysis.JumpingInitialInaccuracyAlt);
+        }
+
     }
 }
