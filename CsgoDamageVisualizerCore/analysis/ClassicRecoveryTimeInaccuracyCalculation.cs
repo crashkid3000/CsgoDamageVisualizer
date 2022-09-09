@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 
 namespace CsgoDamageVisualizerCore.analysis
 {
+    /// <summary>
+    /// <para>This fire inaccuracy model assumes that the recovery time won't shange from simply firing the gun. In other words, either the <c>RecoveryTimeTransitionStartBullet</c> and/or <c>RecoveryTimeTransitionEndBullet</c> are not set, or the <c>recoveryTimeXXXFinal</c> of the gun is identical to the normal <c>recoveryTimeXXX</c>.</para>
+    /// <para>This safely applies for all guns with actual secondary fire modes: Guns with scopes, guns with detachable silencers, guns with double-action-revovler-like behavior, guns with burst modes.</para>
+    /// <para>For other guns, one would need to look at the previously outlined criteria in order to determine if this fire inaccuracy model applies.</para>
+    /// </summary>
     public class ClassicRecoveryTimeInaccuracyCalculation: IRecoveryTimeInaccuracyCalculation
     {
         private InaccuracyAnalysis Analysis { get; init; }

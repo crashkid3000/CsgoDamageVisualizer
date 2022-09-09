@@ -8,6 +8,11 @@ using System.Threading.Tasks;
 
 namespace CsgoDamageVisualizerCore.analysis
 {
+    /// <summary>
+    /// <para>This fire inaccuracy model applies to guns where the firing inaccuracy <i>does</i> change just from firing it.</para>
+    /// <para>The most prominent examples of this are the AK-47 (where the recovery time increases when spraying) and the Negev (where it deceases).</para>
+    /// <para>Guns with proper alternative fire modes (burst fire, scope, detachable silencer, ...) should use <c>ClassicRecoveryTimeInaccuracyCalculation</c></para>
+    /// </summary>
     public class TransitionableRecoveryTimeInaccuracyCalculation: IRecoveryTimeInaccuracyCalculation
     {
         private InaccuracyAnalysis Analysis { get; init; }
