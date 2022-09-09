@@ -53,25 +53,34 @@ namespace CsgoDamageVisualizerTests.core.analysis
         }
 
         [TestMethod]
-        public void a()
+        public void TransitionalAccuracy_WhileSprayingAndStanding_PrintInaccuracy()
         {
-            int bulletsFired = 15;
+            int bulletsFired = 20;
 
             float fireRate = 0.15f;
             float standingInaccuracy = 11.0f;
-            float inaccuracy = transitional.Calculate(fireRate, bulletsFired);
-            Console.WriteLine($"After Bullet {bulletsFired} - Extra Inaccuracy {inaccuracy} - Total Inaccuracy {inaccuracy + standingInaccuracy}");
+            InaccuracyCalculations ic = new InaccuracyCalculations();
+            for(int i = 1; i <= bulletsFired; i++)
+            {
+                float inaccuracy = transitional.Calculate(fireRate, i);
+                Console.WriteLine($"Shot {i} - Inaccuracy {inaccuracy} - Range {Math.Round(ic.CalculateAccurateRangeForHeadshot(inaccuracy), 2)}m");
+            }
+            
             
         }
 
         [TestMethod]
-        public void classicInaccuracy()
+        public void SINGLE_TransitionalAccuracy_WhileSprayingAndStanding_PrintInaccuracy()
         {
-            int bulletsFired = 15;
+
+            int bulletsFired = 6;
+
             float fireRate = 0.15f;
             float standingInaccuracy = 11.0f;
-            float inaccuracy = classic.Calculate(fireRate, bulletsFired);
-            Console.WriteLine($"After Bullet {bulletsFired} - Extra Inaccuracy {inaccuracy} - Total Inaccuracy {inaccuracy + standingInaccuracy}");
+            
+            float inaccuracy = transitional.Calculate(fireRate, bulletsFired);
+            Console.WriteLine($"Shot {bulletsFired} - Inaccuracy {inaccuracy}");
+
         }
 
 
