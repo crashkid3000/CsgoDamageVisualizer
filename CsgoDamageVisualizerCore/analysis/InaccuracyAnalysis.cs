@@ -57,7 +57,7 @@ namespace CsgoDamageVisualizerCore.analysis
         public int InaccuracyTransitionPeriod { get
             {
                 if (weapon.RecoveryTransitionEndBullet != Weapon.NOT_FILLED_INT) { 
-                    return Math.Max(weapon.RecoveryTransitionStartBullet, 0) - weapon.RecoveryTransitionEndBullet;
+                    return weapon.RecoveryTransitionEndBullet - Math.Max(weapon.RecoveryTransitionStartBullet, 0);
                 }
                 else
                 {
