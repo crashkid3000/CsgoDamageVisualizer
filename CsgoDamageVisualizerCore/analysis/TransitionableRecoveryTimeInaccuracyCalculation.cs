@@ -66,6 +66,11 @@ namespace CsgoDamageVisualizerCore.analysis
 
             List<float> fireInaccuracies = new List<float>();
 
+            //float recoveryTimeStartShareAbsolute = Math.Max(CurrentWeapon.RecoveryTransitionEndBullet - shotToBeFired + 1, 0);
+            //float recoveryTimeStartShare = recoveryTimeStartShareAbsolute / (Analysis.InaccuracyTransitionPeriod);
+            //recoveryTimeStartShare = Math.Min(recoveryTimeStartShare, 1);
+            //float recoveryTimeEndShare = 1 - recoveryTimeStartShare;
+
             //Calculate new inaccuracy
             for (int i = 1; i < shotToBeFired; i++)
             {
@@ -73,14 +78,17 @@ namespace CsgoDamageVisualizerCore.analysis
                 float recoveryTimeStartShare = recoveryTimeStartShareAbsolute / Analysis.InaccuracyTransitionPeriod;
                 recoveryTimeStartShare = Math.Min(recoveryTimeStartShare, 1);
                 float recoveryTimeEndShare = 1 - recoveryTimeStartShare;
+
+                //TODO: Attempt calculation of averageRecoveryTime with exponential decrease: f(x)=a*(b^x), f(RecoveryTransitionStartBullet) = recoveryTimeStart, f(RecoveryTransitionEndBullet) = recoveryTimeEnd. Maybe this is the solution?
                 float averageRecoveryTime = recoveryTimeEndShare * recoveryTimeEnd + recoveryTimeStartShare * recoveryTimeStart;
                 
                 float timePassedSinceFiring = userCycleTime * (shotToBeFired - i);
                 float newInaccuracy = new InaccuracyCalculations().CalculateExtraInaccuracyAfterTime(CurrentWeapon.InaccuracyFire, averageRecoveryTime, timePassedSinceFiring);
                 firingInaccuracy = newInaccuracy;
                 fireInaccuracies.Add(firingInaccuracy);
-                
-                Debug.WriteLineIf(i == shotToBeFired - 1, $"[{i+1}] recoveryTime share (start/end) {recoveryTimeEndShare}/{recoveryTimeStartShare} - recoveryTime {averageRecoveryTime} - new inaccuracy {newInaccuracy}");
+
+                Debug.WriteLine($"[{i + 1}] recoveryTime share (start/end) {recoveryTimeEndShare}/{recoveryTimeStartShare} - recoveryTime {averageRecoveryTime} - new inaccuracy {newInaccuracy} - sum {fireInaccuracies.Sum()}");
+                //Debug.WriteLineIf(i == shotToBeFired - 1, $"[{i+1}] recoveryTime share (start/end) {recoveryTimeEndShare}/{recoveryTimeStartShare} - recoveryTime {averageRecoveryTime} - new inaccuracy {newInaccuracy}");
             }
             return fireInaccuracies.Sum() + initialInaccuracy;
         }

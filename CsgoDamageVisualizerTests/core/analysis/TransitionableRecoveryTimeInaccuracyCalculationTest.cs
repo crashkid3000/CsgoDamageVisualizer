@@ -91,8 +91,9 @@ namespace CsgoDamageVisualizerTests.core.analysis
             float fireRate = 0.075f;
             float standingInaccuracy = 11.0f;
             InaccuracyCalculations ic = new InaccuracyCalculations();
-            for(int i = 1; i <= bulletsFired; i++)
+            for (int i = 1; i <= bulletsFired; i++)
             {
+                //int i = bulletsFired;
                 float inaccuracy = transitional_Negev.Calculate(fireRate, i);
                 Console.WriteLine($"Shot {i} - Inaccuracy {inaccuracy} - Range {Math.Round(ic.CalculateAccurateRangeForHeadshot(inaccuracy), 2)}m");
             }

@@ -26,9 +26,6 @@ namespace CsgoDamageVisualizerCore.analysis
         public float CrouchingInaccuracy { get { return weapon.Spread + weapon.InaccuracyCrouch; } }
         public float CrouchingInaccuracyAlt { get { return weapon.ValueOrBackupValue(weapon.SpreadAlt, weapon.Spread) + weapon.ValueOrBackupValue(weapon.InaccuracyCrouchAlt, weapon.InaccuracyCrouch); } }
 
-        public float RunningInaccuracy { get { return this.StandingInaccuracy + weapon.InaccuracyMove; } }
-        public float RunningInaccuracyAlt { get { return this.StandingInaccuracyAlt + weapon.ValueOrBackupValue(weapon.InaccuracyMoveAlt, weapon.InaccuracyMove); } }
-
         public float LadderInaccuracy { get { return weapon.Spread + (2 * weapon.InaccuracyLadder); } }
         public float LadderInaccuracyAlt { get { return weapon.ValueOrBackupValue(weapon.SpreadAlt, weapon.Spread) + (2 * weapon.ValueOrBackupValue(weapon.InaccuracyLadderAlt, weapon.InaccuracyLadder)); } }
 
