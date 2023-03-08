@@ -84,54 +84,107 @@ namespace CsgoDamageVisualizerTests.core.analysis
         }
 
         [TestMethod]
-        public void TransitionalAccuracy_Ne_WhileSprayingAndStanding_PrintInaccuracy()
+        public void TransitionalAccuracy_Negev_WhileSprayingAndStanding()
         {
-            int bulletsFired = 20;
-
+            //Arrange
+            List<float> expectedInaccuracies = new List<float> { 12.17f, 29.04f, 38.53f, 43.86f, 46.86f, 48.55f, 49.50f, 50.03f, 50.33f, 50.50f, 44.77f, 34.38f, 21.45f, 19.16f, 18.75f, 18.67f, 18.66f, 18.66f, 18.66f, 18.66f};
+            List<float> actualInaccuracies = new List<float>();
             float fireRate = 0.075f;
-            float standingInaccuracy = 11.0f;
             InaccuracyCalculations ic = new InaccuracyCalculations();
-            for (int i = 1; i <= bulletsFired; i++)
+
+            for (int i = 1; i <= expectedInaccuracies.Count; i++)
             {
+                //Act
                 //int i = bulletsFired;
                 float inaccuracy = transitional_Negev.Calculate(fireRate, i);
-                Console.WriteLine($"Shot {i} - Inaccuracy {inaccuracy} - Range {Math.Round(ic.CalculateAccurateRangeForHeadshot(inaccuracy), 2)}m");
+                Console.WriteLine($"Shot {i} - Inaccuracy {Math.Round(inaccuracy, 2)} - Range {Math.Round(ic.CalculateAccurateRangeForHeadshot(inaccuracy), 2)}m");
+                Console.WriteLine($"  Expected – {expectedInaccuracies[i - 1]}");
+
+                //Adapt
+                float roundedInaccuracy = (float)Math.Round(inaccuracy, 2);
+                actualInaccuracies.Add(roundedInaccuracy);
+                
             }
-            
-            
+            //Assert
+            CollectionAssert.AreEqual(expectedInaccuracies, actualInaccuracies);
         }
 
         [TestMethod]
-        public void TransitionalAccuracy_57_WhileSprayingAndStanding_PrintInaccuracy()
+        public void TransitionalInaccuracy_Negev_WhileTappingAndStanding()
         {
-            int bulletsFired = 20;
-
-            float fireRate = 0.15f;
-            float standingInaccuracy = 11.0f;
+            //Arrange
+            List<float> expectedInaccuracies = new List<float> { 12.17f, 16.57f, 17.22f, 17.31f, 17.33f, 17.33f, 17.33f, 17.33f, 17.33f, 17.33f, 17.33f, 17.33f, 17.33f, 17.33f, 17.33f };
+            List<float> actualInaccuracies = new List<float>();
+            float fireRate = 0.25f;
             InaccuracyCalculations ic = new InaccuracyCalculations();
-            for (int i = 1; i <= bulletsFired; i++)
+
+            for (int i = 1; i <= expectedInaccuracies.Count; i++)
             {
+                //Act
+                //int i = bulletsFired;
+                float inaccuracy = transitional_Negev.Calculate(fireRate, i);
+                Console.WriteLine($"Shot {i} - Inaccuracy {Math.Round(inaccuracy, 2)} - Range {Math.Round(ic.CalculateAccurateRangeForHeadshot(inaccuracy), 2)}m");
+                Console.WriteLine($"  Expected – {expectedInaccuracies[i - 1]}");
+
+                //Adapt
+                float roundedInaccuracy = (float)Math.Round(inaccuracy, 2);
+                actualInaccuracies.Add(roundedInaccuracy);
+                
+            }
+            //Assert
+            CollectionAssert.AreEqual(expectedInaccuracies, actualInaccuracies);
+        }
+
+        [TestMethod]
+        public void TransitionalAccuracy_FiveseveN_WhileSprayingAndStanding_PrintInaccuracy()
+        {
+            //Arrange
+            List<float> expectedInaccuracies = new List<float>
+                { 11.10f, 17.72f, 21.85f, 25.50f, 29.07f, 32.64f, 34.42f, 
+            35.32f, 35.77f, 35.99f, 36.11f, 36.16f, 36.19f, 36.20f, 36.21f, 36.22f, 36.22f, 36.22f, 36.22f, 36.22f };
+            List<float> actualInaccuracies = new List<float>();
+            
+            float fireRate = 0.15f;
+
+            InaccuracyCalculations ic = new InaccuracyCalculations();
+            for (int i = 1; i <= expectedInaccuracies.Count; i++)
+            {
+                //Act
                 float inaccuracy = transitional_FiveseveN.Calculate(fireRate, i);
                 Console.WriteLine($"Shot {i} - Inaccuracy {inaccuracy} - Range {Math.Round(ic.CalculateAccurateRangeForHeadshot(inaccuracy), 2)}m");
+                
+                float roundedInaccuracy = (float)Math.Round(inaccuracy, 2);
+                actualInaccuracies.Add(roundedInaccuracy);
             }
-
-
-        }
-
-        [TestMethod]
-        public void SINGLE_TransitionalAccuracy_WhileSprayingAndStanding_PrintInaccuracy()
-        {
-
-            int bulletsFired = 11;
-
-            float fireRate = 0.075f;
-            float standingInaccuracy = 11.0f;
             
-            float inaccuracy = transitional_Negev.Calculate(fireRate, bulletsFired);
-            Console.WriteLine($"Shot {bulletsFired} - Inaccuracy {inaccuracy}");
-
+            //Assert
+            CollectionAssert.AreEqual(expectedInaccuracies, actualInaccuracies);
         }
+        
+        [TestMethod]
+        public void TransitionalAccuracy_FiveseveN_WhileTappingAndStanding_PrintInaccuracy()
+        {
+            //Arrange
+            List<float> expectedInaccuracies = new List<float>
+                { 11.10f, 11.14f, 11.14f, 11.14f, 11.14f, 11.14f, 11.14f, 11.14f, 11.14f, 11.14f, 11.14f, 11.14f };
+            List<float> actualInaccuracies = new List<float>();
+            
+            float fireRate = 0.55f;
 
-
+            InaccuracyCalculations ic = new InaccuracyCalculations();
+            for (int i = 1; i <= expectedInaccuracies.Count; i++)
+            {
+                //Act
+                float inaccuracy = transitional_FiveseveN.Calculate(fireRate, i);
+                Console.WriteLine($"Shot {i} - Inaccuracy {inaccuracy} - Range {Math.Round(ic.CalculateAccurateRangeForHeadshot(inaccuracy), 2)}m");
+                
+                float roundedInaccuracy = (float)Math.Round(inaccuracy, 2);
+                actualInaccuracies.Add(roundedInaccuracy);
+            }
+            
+            //Assert
+            CollectionAssert.AreEqual(expectedInaccuracies, actualInaccuracies);
+        }
+        
     }
 }
