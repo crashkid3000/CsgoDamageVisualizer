@@ -48,20 +48,6 @@ namespace CsgoDamageVisualizerTests.core.analysis
         }
 
         [TestMethod]
-        public void printInaccuracy_spraying()
-        {
-            int bulletsFired = 13;
-            float userCycleTime = 0.17f;
-            ClassicRecoveryTimeInaccuracyCalculation classic = new ClassicRecoveryTimeInaccuracyCalculation(p2000);
-
-            for(int i = 1; i <= bulletsFired; i++)
-            {
-                float inaccuracy = classic.Calculate(userCycleTime, i);
-                Debug.WriteLine($"Shot {i} - Inaccuracy {inaccuracy}");
-            }
-        }
-
-        [TestMethod]
         public void Calculate_WhileSprayingAndStanding_Works()
         {
             int bulletsFired = 13;
