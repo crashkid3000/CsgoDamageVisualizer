@@ -65,12 +65,13 @@ namespace CsgoDamageVisualizerCore.analysis
             
             float fireInaccuracy = 0.0f;
             float oldInaccuracy = 0.0f;
-            
+
+            float sprayFactor = CalculateSprayFactor(userCycleTime);
 
             //Calculate new inaccuracy
             for (int i = 1; i < shotToBeFired; i++)
             {
-                float averageRecoveryTime = this.CalculateRecoveryTime(i, recoveryTimeStart, recoveryTimeEnd);
+                float averageRecoveryTime = this.CalculateRecoveryTime(i, recoveryTimeStart, recoveryTimeEnd, sprayFactor);
 
                 fireInaccuracy =
                     new InaccuracyCalculations().CalculateExtraInaccuracyAfterTime(
@@ -96,7 +97,7 @@ namespace CsgoDamageVisualizerCore.analysis
         /// <param name="recoveryTimeStart">The initial recovery time</param>
         /// <param name="recoveryTimeEnd">The recovery time after the transition happened</param>
         /// <returns></returns>
-        private float CalculateRecoveryTime(int shotNr, float recoveryTimeStart, float recoveryTimeEnd)
+        private float CalculateRecoveryTime(int shotNr, float recoveryTimeStart, float recoveryTimeEnd, float sprayFactor)
         {
             /*
              * TODO Make this work for tap-firing
@@ -107,17 +108,35 @@ namespace CsgoDamageVisualizerCore.analysis
              * Proposal for a formula: 
              */
 
-            float recoveryTimeStartShareAbsolute = Math.Max(CurrentWeapon.RecoveryTransitionEndBullet - shotNr, 0);
+            float recoveryTimeStartShareAbsolute = Math.Max(CurrentWeapon.RecoveryTransitionEndBullet - (shotNr * sprayFactor), 0);
             float recoveryTimeStartShare = recoveryTimeStartShareAbsolute / Analysis.InaccuracyTransitionPeriod;
             recoveryTimeStartShare = Math.Min(recoveryTimeStartShare, 1);
             float recoveryTimeEndShare = 1 - recoveryTimeStartShare;
 
-            float averageRecoveryTime = recoveryTimeEndShare * recoveryTimeEnd + recoveryTimeStartShare  * recoveryTimeStart;
+            float averageRecoveryTime = recoveryTimeEndShare * recoveryTimeEnd + recoveryTimeStartShare * recoveryTimeStart;
 
             return averageRecoveryTime;
         }
 
-
+        /// <summary>
+        /// Calculates how much a user sprays. <para>Note that the current implementation (Feb 12, 2023) is not proven to be
+        /// exactly what the game uses. However, this implementation follows some key patterns:
+        /// <list type="bullet">
+        /// <item>It is 1.0f if you spray – like the game</item>
+        /// <item>If you tap-fire, it is 0.0f – like the game</item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <param name="userCycleTime">How quickly the user fires</param>
+        /// <returns></returns>
+        private float CalculateSprayFactor(float userCycleTime)
+        {
+            float dividend = CurrentWeapon.Cycletime - userCycleTime;
+            float sprayFactor = (dividend / CurrentWeapon.Cycletime) + 1;
+            sprayFactor = Math.Max(Math.Min(sprayFactor, 1.0f), 0.0f);
+            Console.WriteLine($"sprayFactor: {sprayFactor}");
+            return sprayFactor;
+        }
 
     }
 }
