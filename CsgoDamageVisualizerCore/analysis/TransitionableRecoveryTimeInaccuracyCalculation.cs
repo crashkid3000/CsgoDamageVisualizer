@@ -46,8 +46,7 @@ namespace CsgoDamageVisualizerCore.analysis
             {
                 throw new ArgumentException($"The inaccuracy transition period of the weapon {CurrentWeapon.Name} must not be <= 0! (is {CurrentWeapon.RecoveryTransitionEndBullet} - {CurrentWeapon.RecoveryTransitionStartBullet} = {Analysis.InaccuracyTransitionPeriod}");
             }
-
-            // float firingInaccuracy;
+            
             float recoveryTimeStart, recoveryTimeEnd, initialInaccuracy;
 
             //set initial inaccuracy
@@ -63,92 +62,62 @@ namespace CsgoDamageVisualizerCore.analysis
                 recoveryTimeStart = CurrentWeapon.RecoveryTimeCrouch;
                 recoveryTimeEnd = CurrentWeapon.RecoveryTimeCrouchFinal;
             }
-
-            //List<float> fireInaccuracies = new List<float>();
+            
             float fireInaccuracy = 0.0f;
             float oldInaccuracy = 0.0f;
+            
 
             //Calculate new inaccuracy
             for (int i = 1; i < shotToBeFired; i++)
             {
-                float recoveryTimeStartShareAbsolute = Math.Max(CurrentWeapon.RecoveryTransitionEndBullet - i, 0);
-                float recoveryTimeStartShare = recoveryTimeStartShareAbsolute / Analysis.InaccuracyTransitionPeriod;
-                recoveryTimeStartShare = Math.Min(recoveryTimeStartShare, 1);
-                float recoveryTimeEndShare = 1 - recoveryTimeStartShare;
+                float averageRecoveryTime = this.CalculateRecoveryTime(i, recoveryTimeStart, recoveryTimeEnd);
 
-                float averageRecoveryTime = recoveryTimeEndShare * recoveryTimeEnd + recoveryTimeStartShare * recoveryTimeStart;
-                
-                // float timePassedSinceFiring = userCycleTime * (shotToBeFired - i );
-                // //float newInaccuracy = new InaccuracyCalculations().CalculateExtraInaccuracyAfterTime(CurrentWeapon.InaccuracyFire, averageRecoveryTime, timePassedSinceFiring);
-                // //firingInaccuracy = newInaccuracy;
-                // //fireInaccuracies.Add(firingInaccuracy);
-                //
-                // float oldInaccuracy = fireInaccuracy;
-                // fireInaccuracy = new InaccuracyCalculations().CalculateExtraInaccuracyAfterTime(fireInaccuracy + CurrentWeapon.InaccuracyFire, averageRecoveryTime, timePassedSinceFiring);
-                
-                // from BlackRetinas and SLothSquadrons weapon spreadsheet
-                fireInaccuracy = (float) ((CurrentWeapon.InaccuracyFire + oldInaccuracy) * Math.Pow(0.1, userCycleTime / averageRecoveryTime));
+                fireInaccuracy =
+                    new InaccuracyCalculations().CalculateExtraInaccuracyAfterTime(
+                        CurrentWeapon.InaccuracyFire + oldInaccuracy, averageRecoveryTime,userCycleTime);
                 oldInaccuracy = fireInaccuracy;
 
-                Debug.WriteLineIf(i == shotToBeFired - 1, $"[{i+1}] recoveryTime share (start/end) {recoveryTimeEndShare}/{recoveryTimeStartShare} - recoveryTime {averageRecoveryTime} - new inaccuracy {fireInaccuracy - oldInaccuracy}");
+                Debug.WriteLineIf(i == shotToBeFired - 1, $"[{i+1}] recoveryTime {averageRecoveryTime} - new inaccuracy {fireInaccuracy - oldInaccuracy}");
             }
             //return fireInaccuracies.Sum() + initialInaccuracy;
             return fireInaccuracy + initialInaccuracy;
         }
 
-        //public float Calculate(float userCycleTime, int shotToBeFired)
-        //{
-        //    /* 
-        //     * Use similar algorithm to Classic, but only do the following: smoothly swap recovery times. Leave everythin as is, and then try again
-        //     */
-        //    if (userCycleTime < CurrentWeapon.Cycletime)
-        //    {
-        //        throw new ArgumentOutOfRangeException($"Cycletime of the user is too fast for the weapon! userCycleTime {userCycleTime}, {CurrentWeapon.Name}'s cycletime {CurrentWeapon.Cycletime}");
-        //    }
-        //    if (shotToBeFired < 1)
-        //    {
-        //        throw new ArgumentOutOfRangeException($"shotToBeFired must be > 0! (is {shotToBeFired}");
-        //    }
-        //    if (Analysis.InaccuracyTransitionPeriod <= 0)
-        //    {
-        //        throw new ArgumentException($"The inaccuracy transition period of the weapon {CurrentWeapon.Name} must not be <= 0! (is {CurrentWeapon.RecoveryTransitionEndBullet} - {CurrentWeapon.RecoveryTransitionStartBullet} = {Analysis.InaccuracyTransitionPeriod}");
-        //    }
+        /// <summary>
+        /// <para>Calculate recovery time to be used by.</para>
+        /// <para>The calculation returns the following:
+        /// <list type="bullet">
+        /// <item>shotNr &lt;= CurrentWeapon.RecoveryTransitionStartBullet: recoveryTimeStart</item>
+        /// <item>CurrentWeapon.RecoveryTransitionStartBullet &lt; shotNr &lt;= CurrentWeapon.RecoveryTransitionEndBullet: The average of recoveryTimeStart and recoveryTimeEnd</item>
+        /// <item>CurrentWeapon.RecoveryTransitionEndBullet &lt; shotNr: recoveryTimeEnd</item>
+        /// </list></para>
+        /// </summary>
+        /// <param name="shotNr">The number of the shot to be fired</param>
+        /// <param name="recoveryTimeStart">The initial recovery time</param>
+        /// <param name="recoveryTimeEnd">The recovery time after the transition happened</param>
+        /// <returns></returns>
+        private float CalculateRecoveryTime(int shotNr, float recoveryTimeStart, float recoveryTimeEnd)
+        {
+            /*
+             * TODO Make this work for tap-firing
+             * This algorithm only works in case of spraying. If you tap-fire, the recoil resets in such a way that
+             * the recoveryTime never transitions; if you fire more quickly, the recoveryTime should transition later and
+             * more slowly than if you sprayed with the gun.
+             *
+             * Proposal for a formula: 
+             */
 
-        //    float retVal, recoveryTimeStart, recoveryTimeEnd, initialInaccuracy;
+            float recoveryTimeStartShareAbsolute = Math.Max(CurrentWeapon.RecoveryTransitionEndBullet - shotNr, 0);
+            float recoveryTimeStartShare = recoveryTimeStartShareAbsolute / Analysis.InaccuracyTransitionPeriod;
+            recoveryTimeStartShare = Math.Min(recoveryTimeStartShare, 1);
+            float recoveryTimeEndShare = 1 - recoveryTimeStartShare;
 
-        //    //set initial inaccuracy
-        //    if (IsStanding)
-        //    {
-        //        initialInaccuracy = Analysis.StandingInaccuracy;
-        //        recoveryTimeStart = CurrentWeapon.RecoveryTimeStand;
-        //        recoveryTimeEnd = CurrentWeapon.RecoveryTimeStandFinal;
-        //    }
-        //    else
-        //    {
-        //        initialInaccuracy = Analysis.CrouchingInaccuracy;
-        //        recoveryTimeStart = CurrentWeapon.RecoveryTimeCrouch;
-        //        recoveryTimeEnd = CurrentWeapon.RecoveryTimeCrouchFinal;
-        //    }
+            float averageRecoveryTime = recoveryTimeEndShare * recoveryTimeEnd + recoveryTimeStartShare  * recoveryTimeStart;
 
-        //    retVal = 0.0f;
+            return averageRecoveryTime;
+        }
 
-        //    //Calculate new inaccuracy
-        //    for (int i = 1; i < shotToBeFired; i++)
-        //    {
-        //        float recoveryTimeStartShareAbsolute = Math.Max(CurrentWeapon.RecoveryTransitionEndBullet - i, 0);
-        //        float recoveryTimeStartShare = recoveryTimeStartShareAbsolute / Analysis.InaccuracyTransitionPeriod;
-        //        recoveryTimeStartShare = Math.Min(recoveryTimeStartShare, 1);
-        //        float recoveryTimeEndShare = 1 - recoveryTimeStartShare;
-        //        float averageRecoveryTime = recoveryTimeEndShare * recoveryTimeEnd + recoveryTimeStartShare * recoveryTimeStart;
 
-        //        float timePassedSinceFiring = userCycleTime * i;
-        //        float newInaccuracy = new InaccuracyCalculations().CalculateExtraInaccuracyAfterTime(retVal + CurrentWeapon.InaccuracyFire, averageRecoveryTime, timePassedSinceFiring);
-        //        retVal += newInaccuracy;
-
-        //        Debug.WriteLineIf(i == shotToBeFired - 1, $"  recoveryTime share (start/end) {recoveryTimeEndShare}/{recoveryTimeStartShare} - recoveryTime {averageRecoveryTime} - new inaccuracy {newInaccuracy}");
-        //    }
-        //    return retVal + initialInaccuracy;
-        //}
 
     }
 }

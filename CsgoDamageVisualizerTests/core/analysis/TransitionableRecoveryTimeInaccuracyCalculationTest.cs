@@ -136,7 +136,7 @@ namespace CsgoDamageVisualizerTests.core.analysis
         }
 
         [TestMethod]
-        public void TransitionalAccuracy_FiveseveN_WhileSprayingAndStanding_PrintInaccuracy()
+        public void TransitionalAccuracy_FiveseveN_WhileSprayingAndStanding()
         {
             //Arrange
             List<float> expectedInaccuracies = new List<float>
@@ -162,7 +162,7 @@ namespace CsgoDamageVisualizerTests.core.analysis
         }
         
         [TestMethod]
-        public void TransitionalAccuracy_FiveseveN_WhileTappingAndStanding_PrintInaccuracy()
+        public void TransitionalAccuracy_FiveseveN_WhileTappingAndStanding()
         {
             //Arrange
             List<float> expectedInaccuracies = new List<float>
