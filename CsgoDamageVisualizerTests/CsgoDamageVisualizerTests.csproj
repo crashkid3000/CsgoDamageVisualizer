@@ -27,4 +27,8 @@
     <Resource Include="resources\core\itmes_gaem.cfg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="resources\core\s2\csgo\scripts\items\" />
+  </ItemGroup>
+
 </Project>
