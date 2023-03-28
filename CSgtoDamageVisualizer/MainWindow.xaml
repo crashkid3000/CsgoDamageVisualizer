@@ -4,20 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSgtoDamageVisualizer"
+        xmlns:viewModel="clr-namespace:CsgoDamageVisualizerDesktop.viewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.DataContext>
+            <viewModel:WeaponsViewModel></viewModel:WeaponsViewModel>
+        </Grid.DataContext>
         <DockPanel Dock="Top" VerticalAlignment="Top">
             <Menu x:Name="menu" Width="Auto" Height="20" DockPanel.Dock="Top">
                 <MenuItem Header="_Help">
-                    <MenuItem Header="Reload Weapons File..." Click="RefreshWeaponFileMenuItem_OnClick" Name="RefreshWeaponFileMenuItem" ToolTip="Reloads the Weapon Config File (this may take a second)."></MenuItem>
+                    <MenuItem Header="Reload Weapons File..." Command="{Binding LoadWeaponsCommand}" Name="RefreshWeaponFileMenuItem" ToolTip="Reloads the Weapon Config File (this may take a second)."/>
                 </MenuItem>
             </Menu>
         </DockPanel>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="235,180,0,0" TextWrapping="Wrap" Text="Diese Box hat ein Tooltip" VerticalAlignment="Top" MouseEnter="textBox_MouseEnter" ToolTip="Das ist der Tooltip. Tada!"/>
 
-        <ComboBox Height="20" Width="130" Name="WeaponSelectionComboBox">
-        </ComboBox>
+        <ComboBox Height="20" Width="130" Name="WeaponSelectionComboBox" ItemsSource="{Binding WeaponsProperty.Value}"/>
+
+        <Rectangle Width="80" Height="60" Fill="LimeGreen" Margin="159,79,561,295" Name="StatusRect"></Rectangle>
 
 
 

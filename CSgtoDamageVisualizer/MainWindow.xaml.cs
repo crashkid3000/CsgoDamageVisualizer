@@ -1,5 +1,6 @@
 ﻿using CsgoDamageVisualizerDesktop.customUi;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -18,6 +19,7 @@ using System.Windows.Shapes;
 using CsgoDamageVisualizer.config;
 using CsgoDamageVisualizerCore.loader;
 using CsgoDamageVisualizerCore.loader.model;
+using CsgoDamageVisualizerDesktop.viewModel;
 
 namespace CSgtoDamageVisualizer
 {
@@ -26,7 +28,7 @@ namespace CSgtoDamageVisualizer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IReadOnlyDictionary<string, CfgWeapon> Weapons { get; set; }
+        public IReadOnlyDictionary<string, CfgWeapon> Weapons { get; set; }
 
         public MainWindow()
         {
@@ -36,25 +38,12 @@ namespace CSgtoDamageVisualizer
             Console.WriteLine($"Loading with config {configType.Name}");
             ICsgoDamageVisualizerConfig.ConfigInstanceType = configType;
 
-            Weapons = new ReadOnlyDictionary<string, CfgWeapon>(new Dictionary<string, CfgWeapon>());
-            WeaponSelectionComboBox.ItemsSource = Weapons.Keys; //todo should probably use proper property binding
         }
 
         private void textBox_MouseEnter(object sender, MouseEventArgs e)
         {
             Console.WriteLine("enter");
-            
-            
         }
 
-        private void RefreshWeaponFileMenuItem_OnClick(object sender, RoutedEventArgs e)
-        {
-            CfgParser cfgParser = new CfgParser();
-
-            Weapons = cfgParser.ParseCfgFile();
-            WeaponSelectionComboBox.ItemsSource = Weapons.Keys; //todo should probably use proper property binding
-
-            Debug.WriteLine($"Loaded {Weapons.Count} weapons");
-        }
     }
 }
