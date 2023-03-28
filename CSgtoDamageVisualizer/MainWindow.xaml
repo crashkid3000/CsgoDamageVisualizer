@@ -7,7 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="169,114,0,0" TextWrapping="Wrap" Text="Diese Box hat ein Tooltip" VerticalAlignment="Top" MouseEnter="textBox_MouseEnter" ToolTip="Das ist der Tooltip. Tada!"/>
+        <DockPanel Dock="Top" VerticalAlignment="Top">
+            <Menu x:Name="menu" Width="Auto" Height="20" DockPanel.Dock="Top">
+                <MenuItem Header="_Help">
+                    <MenuItem Header="Reload Weapons File..." Click="RefreshWeaponFileMenuItem_OnClick" Name="RefreshWeaponFileMenuItem" ToolTip="Reloads the Weapon Config File (this may take a second)."></MenuItem>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="235,180,0,0" TextWrapping="Wrap" Text="Diese Box hat ein Tooltip" VerticalAlignment="Top" MouseEnter="textBox_MouseEnter" ToolTip="Das ist der Tooltip. Tada!"/>
+
+        <ComboBox Height="20" Width="130" Name="WeaponSelectionComboBox">
+        </ComboBox>
+
+
 
     </Grid>
 </Window>

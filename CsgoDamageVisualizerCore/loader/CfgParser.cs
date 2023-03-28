@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,7 +16,7 @@ namespace CsgoDamageVisualizerCore.loader
     public class CfgParser
     {
 
-        private const string WEAPON_PREFAB_START_PATTERN = @"\s+""weapon_\w+_prefab""\s*";
+        private const string WEAPON_PREFAB_START_PATTERN = @"^\s+""weapon_\w+_prefab""\s*";
         private const string OPENING_BRACES_PATTERN = @"\s*?\{\s*";
         private const string CLOSING_BRACES_PATTERN = @"\s*?\}\s*";
 
@@ -30,11 +31,11 @@ namespace CsgoDamageVisualizerCore.loader
             IReadOnlyDictionary<string, string> cfgAttributeNameToInternalFieldNameMap = CfgWeapon.GetAttributeNameMap();
 
             CfgLoader loader = new CfgLoader();
-            string[] lines = Task.Run(async() => await loader.LoadCfgFileAsync()).Result;
+            string[] lines = Task.Run(async() => await loader.LoadCfgFileAsync()).Result; // todo: make parsing work async ona per-line base (i.e. streaming each line)
 
-            
 
-            foreach(string line in lines)
+
+            foreach (string line in lines)
             {
                 State newState = FindNewState(line);
 
@@ -113,7 +114,7 @@ namespace CsgoDamageVisualizerCore.loader
             {
                 case State.BEFORE_FIRST:
                     {
-                        if (Regex.IsMatch(line, WEAPON_PREFAB_START_PATTERN))
+                        if (IsStartForNewWeaponDefinition(line))
                         {
                             weaponDefintitionIdentationLevel = currentIndentationLevel;
                             return State.IN_WEAPON_DEFINITION;
@@ -122,7 +123,7 @@ namespace CsgoDamageVisualizerCore.loader
                     }
                 case State.BETWEEN_WEAPON_DEFINITION:
                     {
-                        if (Regex.IsMatch(line, WEAPON_PREFAB_START_PATTERN))
+                        if (IsStartForNewWeaponDefinition(line))
                         {
                             return State.IN_WEAPON_DEFINITION;
                         }
@@ -139,6 +140,17 @@ namespace CsgoDamageVisualizerCore.loader
                     }
             }
             return currentState;
+        }
+
+        private static bool IsStartForNewWeaponDefinition(string line)
+        {
+            IEnumerable<string> forbiddenMatches =
+                from forbiddenWeaponName in ICsgoDamageVisualizerConfig.Instance.ForbiddenWeaponsList 
+                    where line.Contains(forbiddenWeaponName)
+                    select forbiddenWeaponName;
+
+            return Regex.IsMatch(line, WEAPON_PREFAB_START_PATTERN)
+                   && !forbiddenMatches.Any();
         }
 
 

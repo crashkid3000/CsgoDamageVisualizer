@@ -69,5 +69,14 @@ namespace CsgoDamageVisualizerCore.loader
         /// </summary>
         /// <returns></returns>
         public abstract Uri GetCsgoInstallDir();
+
+        /// <summary>
+        /// Defines which weapons <i>not</i> to consider when loading the Weapon Config file items_game.txt. THis mostly included throwables.
+        /// </summary>
+        public List<string> ForbiddenWeaponsList => new List<string>()
+        {
+            "decoy", "flashbang", "hegrenade", "fire_grenade", "snowball", "molotov", "smokegrenade", "tagrenade", "fire_bomb", "firebomb", "frag_grenade", "incgrenade",
+            "taser", "zone_repulsor", "shield", "breachcharge", "bumpmine", "healthshot", "fists", "tablet", "melee", "diversion"
+        };
     }
 }
