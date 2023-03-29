@@ -41,6 +41,8 @@ namespace CSgtoDamageVisualizer
             if (DataContext is MainWindowViewModel model)
             {
                 model.IsLoadingWeaponsProperty.PropertyChanged += statusRectangle_setStatus;
+
+                model.LoadWeaponsCommand?.Execute(null);
             }
             
 
