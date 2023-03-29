@@ -48,9 +48,10 @@ namespace CsgoDamageVisualizerDesktop.viewModel
 
         public MainWindowViewModel()
         {
-            WeaponsProperty = new Property<IReadOnlyDictionary<string, CfgWeapon>>()
-                { Value = new ReadOnlyDictionary<string, CfgWeapon>(new Dictionary<string, CfgWeapon>()) };
-            IsLoadingWeaponsProperty = new Property<bool>() { Value = false };
+            WeaponsProperty =
+                new Property<IReadOnlyDictionary<string, CfgWeapon>>(
+                    new ReadOnlyDictionary<string, CfgWeapon>(new Dictionary<string, CfgWeapon>()));
+            IsLoadingWeaponsProperty = new Property<bool>(false);
         }
         
     }

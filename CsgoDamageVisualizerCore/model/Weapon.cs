@@ -28,7 +28,6 @@ namespace CsgoDamageVisualizerCore.model
                 {
                     if(property.PropertyType.Equals(typeof(float)))
                     {
-                        
                         property.SetValue(this, CfgWeapon.GetFloatValue(model, weaponPropertyMappingAttribute.CfgWeaponFieldName));
                     }
                     else
@@ -746,12 +745,12 @@ namespace CsgoDamageVisualizerCore.model
         public bool HasZoomLevels { get { return ZoomLevels != 0; } }
 
         /// <summary>
-        /// The inaccuracy immeadiately after jumping, i.e. the sum of <c>InaccuracyJump</c> and <c>InaccuracyJumpAlt</c>, in the <i>primary</i> fire mode.
+        /// The inaccuracy immediately after jumping, i.e. the sum of <c>InaccuracyJump</c> and <c>InaccuracyJumpAlt</c>, in the <i>primary</i> fire mode.
         /// </summary>
         public float InacuracyJumpSum {  get { return InaccuracyJump + InaccuracyJumpInitial; } }
 
         /// <summary>
-        /// The inaccuracy immeadiately after jumping, i.e. the sum of <c>InaccuracyJump</c> and <c>InaccuracyJumpAlt</c>, in the <i>primary</i> fire mode.
+        /// The inaccuracy immediately after jumping, i.e. the sum of <c>InaccuracyJump</c> and <c>InaccuracyJumpAlt</c>, in the <i>secondary</i> fire mode.
         /// </summary>
         public float InacuracyJumpAltSum { get { return InaccuracyJumpAlt + InaccuracyJumpInitialAlt; } }
 
