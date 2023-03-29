@@ -15,42 +15,43 @@ using OxyPlot;
 
 namespace CsgoDamageVisualizerDesktop.viewModel
 {
-    internal class WeaponsViewModel : INotifyPropertyChanged
+    internal class MainWindowViewModel
     {
         
         public Property<IReadOnlyDictionary<string, CfgWeapon>> WeaponsProperty { get; set; }
+        public Property<bool> IsLoadingWeaponsProperty { get; set; }
 
         private ICommand? loadWeaponsCommand;
 
         public ICommand LoadWeaponsCommand
         {
-            get
-            {
-                loadWeaponsCommand ??= new BasicCommand((param) =>
+            get { 
+                loadWeaponsCommand ??= new BasicCommand(async (param) =>
+                {
+                    IsLoadingWeaponsProperty.Value = true;
+
+                    await Task.Run(async () =>
                     {
                         CfgParser cfgParser = new CfgParser();
                         WeaponsProperty.Value = cfgParser.ParseCfgFile();
                         Debug.WriteLine($"  Loaded {WeaponsProperty.Value.Count} Weapons");
                     });
 
+                    IsLoadingWeaponsProperty.Value = false;
+
+
+                });
+
                 return loadWeaponsCommand;
             }
         }
 
-        public WeaponsViewModel()
+        public MainWindowViewModel()
         {
             WeaponsProperty = new Property<IReadOnlyDictionary<string, CfgWeapon>>()
                 { Value = new ReadOnlyDictionary<string, CfgWeapon>(new Dictionary<string, CfgWeapon>()) };
+            IsLoadingWeaponsProperty = new Property<bool>() { Value = false };
         }
         
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-
-
     }
 }

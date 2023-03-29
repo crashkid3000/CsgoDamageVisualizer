@@ -20,6 +20,7 @@ using CsgoDamageVisualizer.config;
 using CsgoDamageVisualizerCore.loader;
 using CsgoDamageVisualizerCore.loader.model;
 using CsgoDamageVisualizerDesktop.viewModel;
+using CsgoDamageVisualizerDesktop.viewModel.utils;
 
 namespace CSgtoDamageVisualizer
 {
@@ -28,7 +29,6 @@ namespace CSgtoDamageVisualizer
     /// </summary>
     public partial class MainWindow : Window
     {
-        public IReadOnlyDictionary<string, CfgWeapon> Weapons { get; set; }
 
         public MainWindow()
         {
@@ -38,11 +38,34 @@ namespace CSgtoDamageVisualizer
             Console.WriteLine($"Loading with config {configType.Name}");
             ICsgoDamageVisualizerConfig.ConfigInstanceType = configType;
 
+            if (DataContext is MainWindowViewModel model)
+            {
+                model.IsLoadingWeaponsProperty.PropertyChanged += statusRectangle_setStatus;
+            }
+            
+
         }
 
         private void textBox_MouseEnter(object sender, MouseEventArgs e)
         {
             Console.WriteLine("enter");
+        }
+
+        private void statusRectangle_setStatus(object? sender, EventArgs args)
+        {
+            bool? newValue = (sender as Property<bool>)?.Value;
+
+            if (newValue == true)
+            {
+                this.IsEnabled = false;
+                StatusRect.Fill = new SolidColorBrush(Color.FromRgb(205, 50, 50));
+            }
+
+            if (newValue == false)
+            {
+                StatusRect.Fill = new SolidColorBrush(Color.FromRgb(50, 205, 50));
+                this.IsEnabled = true;
+            }
         }
 
     }
