@@ -50,7 +50,7 @@ namespace CsgoDamageVisualizerCore.loader
 
                             if (Regex.IsMatch(line, WEAPON_PREFAB_START_PATTERN))
                             {
-                                currentWeapon.__name = line.Trim();
+                                currentWeapon.__name = line.Trim().Replace("\"", "");
                             }
                             else
                             {
