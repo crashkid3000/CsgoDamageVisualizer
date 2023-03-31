@@ -12,7 +12,8 @@
     </Window.DataContext>
     <Grid>
         <DockPanel Dock="Top" VerticalAlignment="Top">
-            <Menu x:Name="menu" Width="Auto" Height="20" DockPanel.Dock="Top">
+            <Menu x:Name="menu" Width="Auto" DockPanel.Dock="Top">
+                
                 <MenuItem Header="_Help">
                     <MenuItem Header="Reload Weapons File..." Command="{Binding LoadWeaponsCommand}" Name="RefreshWeaponFileMenuItem" ToolTip="Reloads the Weapon Config File (this may take a second)."/>
                 </MenuItem>
@@ -20,9 +21,10 @@
         </DockPanel>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="235,180,0,0" TextWrapping="Wrap" Text="Diese Box hat ein Tooltip" VerticalAlignment="Top" MouseEnter="textBox_MouseEnter" ToolTip="Das ist der Tooltip. Tada!"/>
 
-        <ComboBox Height="20" Width="130" Name="WeaponSelectionComboBox" ItemsSource="{Binding WeaponsProperty.Value}"/>
+        <Rectangle Width="80" Height="60" Fill="LimeGreen" Margin="159,79,561,295" Name="StatusRect"/>
 
-        <Rectangle Width="80" Height="60" Fill="LimeGreen" Margin="159,79,561,295" Name="StatusRect"></Rectangle>
+        <ComboBox Width="130" Height="20" Name="WeaponSelectionComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="134,32,0,0" ItemsSource="{Binding Path=DisplayableWeaponsProperty.Value.Keys}"/>
+        <Label x:Name="label" Content="Select your weapon:" HorizontalAlignment="Left" Margin="10,29,0,0" VerticalAlignment="Top"/>
 
 
 
