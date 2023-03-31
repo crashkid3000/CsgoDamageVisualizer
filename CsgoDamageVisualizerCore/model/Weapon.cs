@@ -198,7 +198,7 @@ namespace CsgoDamageVisualizerCore.model
         private bool hasBurstFire = false;
         private float burstCycleTime = NOT_FILLED_FLOAT;
         private float burstPauseTime = NOT_FILLED_FLOAT;
-        private bool hasDetachableSilencer = false;
+        private int silencerMode = 0;
         private bool isRevolver = false;
         private bool aimsightCapable = false;
         private int aimsightFov = NOT_FILLED_INT;
@@ -631,10 +631,10 @@ namespace CsgoDamageVisualizerCore.model
         public float BurstPauseTime { get { return burstPauseTime; } init { burstPauseTime = value; } }
 
         /// <summary>
-        /// <para>Whether the gun has a silencer than can be detached (<c>true</c>) or not (<c>false</c>)</para>
+        /// <para>Whether the gun has no silencer (<c>0</c>), a silencer than can be detached (<c>1</c>) or a fixed silencer (<c>2</c>)</para>
         /// </summary>
-        [WeaponPropertyMapping(nameof(CfgWeapon.hasDetachableSilencer))] 
-        public bool HasDetachableSilencer { get { return hasDetachableSilencer; } init { hasDetachableSilencer = value; } }
+        [WeaponPropertyMapping(nameof(CfgWeapon.silencerMode))] 
+        public int SilencerMode { get { return silencerMode; } init { silencerMode = value; } }
 
         /// <summary>
         /// <para>whether the gun is a double-action gun (with a delay before each shot on the primary fire mode) (<c>true</c>) or not (<c>false</c>)</para>

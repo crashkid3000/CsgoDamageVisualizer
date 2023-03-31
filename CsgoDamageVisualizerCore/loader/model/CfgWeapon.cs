@@ -171,9 +171,9 @@ namespace CsgoDamageVisualizerCore.loader.model
         internal string? burstCycleTime;
         [CfgAttributeName("time between burst shots")]
         internal string? burstPauseTime;
-        [CfgAttributeType(typeof(bool))]
+        [CfgAttributeType(typeof(int))]
         [CfgAttributeName("has silencer")]
-        internal string? hasDetachableSilencer;
+        internal string? silencerMode;
         [CfgAttributeType(typeof(bool))]
         [CfgAttributeName("is revolver")]
         internal string? isRevolver;
@@ -196,8 +196,8 @@ namespace CsgoDamageVisualizerCore.loader.model
         [CfgAttributeName("kill award")]
         internal string? killAward;
 
-        static private Dictionary<string, string> attributeMap = new Dictionary<string, string>();
-        static private Dictionary<string, Type> castTypeMap = new Dictionary<string, Type>();
+        private static Dictionary<string, string> attributeMap = new Dictionary<string, string>();
+        private static Dictionary<string, Type> castTypeMap = new Dictionary<string, Type>();
         private static readonly int NOT_FILLED_INT = -483792;
         private static readonly float NOT_FILLED_FLOAT = -425233.9f;
 
@@ -296,11 +296,17 @@ namespace CsgoDamageVisualizerCore.loader.model
         {
             FieldInfo field = typeof(CfgWeapon).GetField(memberName, BindingFlags.Instance | BindingFlags.NonPublic) ?? throw new NullReferenceException($"The member {memberName} was not found insice class {nameof(CfgWeapon)}"); ;
             string? value = (string?)field.GetValue(instance);
-            if(value == null)
+            switch (value)
             {
-                return false;
+                case "1":
+                case "True":
+                    return true;
+                case "0":
+                case "False":
+                    return false;
+                default:
+                    return Convert.ToBoolean(value);
             }
-            return Convert.ToBoolean(value);
         }
     }
 }
