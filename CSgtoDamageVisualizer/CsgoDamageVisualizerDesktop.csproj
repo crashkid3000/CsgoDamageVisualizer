@@ -2,10 +2,11 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows7.0</TargetFramework>
+    <TargetFramework>net9.0-windows</TargetFramework>
     <!--<TargetFramework>.NETCoreApp, Version=v6.0</TargetFramework>-->
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <LangVersion>13</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
