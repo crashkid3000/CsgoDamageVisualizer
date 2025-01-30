@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ using System.Windows.Shapes;
 using CsgoDamageVisualizer.config;
 using CsgoDamageVisualizerCore.loader;
 using CsgoDamageVisualizerCore.loader.model;
+using CsgoDamageVisualizerDesktop.src.exception;
 using CsgoDamageVisualizerDesktop.viewModel;
 using CsgoDamageVisualizerDesktop.viewModel.utils;
 
@@ -44,7 +46,12 @@ namespace CSgtoDamageVisualizer
 
                 model.LoadWeaponsCommand?.Execute(null);
             }
-            
+            else
+            {
+                throw new InvalidDataContextException(typeof(MainWindowViewModel));
+            }
+
+            WeaponSelectionComboBox.SelectionChanged += WeaponImage_updateForCurrentWeapon;
 
         }
 
@@ -68,6 +75,12 @@ namespace CSgtoDamageVisualizer
                 StatusRect.Fill = new SolidColorBrush(Color.FromRgb(50, 205, 50));
                 this.IsEnabled = true;
             }
+        }
+
+        private void WeaponImage_updateForCurrentWeapon(object? sender, SelectionChangedEventArgs eventArgs)
+        {
+            //change pic
+            int pi = 3; //added items from event args, is type object (actually string)
         }
 
     }
