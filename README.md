@@ -7,12 +7,12 @@ This piece of software aims to display the stats of the weapons in CSGO in a hel
 
 This project is split into four parts:
 
-| Project                      | Purpose                                                             |
-| ---------------------------- | ------------------------------------------------------------------- |
-| CSgtoDamageVisualizer (sic!) | The desktop view of the software (WPF)                              |
-| CsgoDamageVisualizerCore     | The actual utility: Cfg loading, models, calculations - you name it |
-| CsgoDamageVisualizerTests    | Unit tests and other kinds of tests                                 |
-| CsgoDamageVisuzalizerWeb     | The web view of the software (ASPX)                                 |
+| Project                     | Purpose                                                             |
+|-----------------------------| ------------------------------------------------------------------- |
+| CsgoDamageVisualizerDesktop | The desktop view of the software (WPF)                              |
+| CsgoDamageVisualizerCore    | The actual utility: Cfg loading, models, calculations - you name it |
+| CsgoDamageVisualizerTests   | Unit tests and other kinds of tests                                 |
+| CsgoDamageVisuzalizerWeb    | The web view of the software (ASPX)                                 |
 
 The primary focus lies in the development of the Core part. When that is finished, the main focus lies on the WPF view with the ASPX view following afterwards.
 
