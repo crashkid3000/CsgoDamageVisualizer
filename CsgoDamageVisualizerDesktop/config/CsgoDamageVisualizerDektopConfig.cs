@@ -7,7 +7,7 @@ using System.Configuration;
 
 using CsgoDamageVisualizerCore.loader;
 
-namespace CsgoDamageVisualizer.config
+namespace CsgoDamageVisualizerDesktop.config
 {
     internal class CsgoDamageVisualizerDektopConfig : ICsgoDamageVisualizerConfig
     {

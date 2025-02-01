@@ -17,10 +17,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using CsgoDamageVisualizer.config;
+using CsgoDamageVisualizerDesktop.config;
 using CsgoDamageVisualizerCore.loader;
 using CsgoDamageVisualizerCore.loader.model;
-using CsgoDamageVisualizerDesktop.src.exception;
+using CsgoDamageVisualizerDesktop.exception;
 using CsgoDamageVisualizerDesktop.viewModel;
 using CsgoDamageVisualizerDesktop.viewModel.utils;
 

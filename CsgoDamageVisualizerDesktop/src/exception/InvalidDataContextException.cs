@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CsgoDamageVisualizerDesktop.src.exception
+namespace CsgoDamageVisualizerDesktop.exception
 {
     /// <summary>
     /// When the data context for a view has an unexpected type, or is otherwise not properly set
