@@ -24,7 +24,7 @@ using CsgoDamageVisualizerDesktop.src.exception;
 using CsgoDamageVisualizerDesktop.viewModel;
 using CsgoDamageVisualizerDesktop.viewModel.utils;
 
-namespace CSgtoDamageVisualizer
+namespace CsgoDamageVisualizerDesktop
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
