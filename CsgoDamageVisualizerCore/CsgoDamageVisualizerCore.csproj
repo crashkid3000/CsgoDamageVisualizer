@@ -7,4 +7,8 @@
     <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ReactiveUI" Version="20.1.63" />
+  </ItemGroup>
+
 </Project>
